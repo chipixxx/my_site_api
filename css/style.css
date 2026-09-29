@@ -1,0 +1,724 @@
+﻿/* ===================================
+   Custom styles (BEM methodology)
+   Desktop-First: >=992px -> >=768px -> <768px
+   =================================== */
+
+/* Единый шрифт для всего сайта */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  /* Новая пастельная палитра */
+  --color-bg: #FAF9F6;          /* Мягкий кремовый фон */
+  --color-surface: #FFFFFF;     /* Белый цвет для карточек, панелей и хедера */
+  --color-primary: #D4E2D4;     /* Пастельный шалфейный (акценты навигации, бейджи) */
+  --color-primary-dark: #B5C9B5;/* Темный шалфейный для состояний наведения */
+  --color-accent: #E5A9A9;      /* Пастельный коралловый (кнопки призыва к действию) */
+  --color-accent-hover: #D69797;/* Более насыщенный коралл для наведения */
+  --color-text: #2D3748;        /* Мягкий темно-серый (не абсолютно черный) для чтения */
+  --color-text-light: #718096;  /* Приглушенный серый для второстепенного текста */
+  --color-border: #E2E8F0;      /* Светлый нейтральный бордер */
+  --color-sidebar-bg: #FFFFFF;
+  --color-white: #FFFFFF;
+  --font-main: 'Inter', sans-serif;
+}
+
+/* Reset & base */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-main);
+  color: var(--color-text);
+  background: var(--color-bg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.6;
+  margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  color: #1A202C;
+  line-height: 1.3;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ===== SITE-HEADER ===== */
+.site-header {
+  background: var(--color-surface);
+  color: var(--color-text);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03); /* Невесомая тень вместо заливки */
+  border-bottom: 1px solid var(--color-border);
+}
+
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 0;
+}
+
+.site-header__logo {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--color-text);
+  text-decoration: none;
+  white-space: nowrap;
+  letter-spacing: -0.5px;
+}
+
+.site-header__logo:hover {
+  color: var(--color-accent);
+}
+
+/* Burger — hidden on desktop */
+.site-header__burger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  width: 36px;
+  height: 36px;
+}
+
+.site-header__burger span {
+  display: block;
+  width: 100%;
+  height: 3px;
+  background: var(--color-text);
+  border-radius: 2px;
+  transition: transform 0.3s, opacity 0.3s;
+}
+
+/* Burger open state */
+.site-header__burger--open span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.site-header__burger--open span:nth-child(2) {
+  opacity: 0;
+}
+
+.site-header__burger--open span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+/* ===== SITE-NAV ===== */
+.site-nav__list {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 0.5rem;
+}
+
+.site-nav__link {
+  color: var(--color-text-light);
+  text-decoration: none;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.site-nav__link:hover,
+.site-nav__link--active {
+  background: var(--color-primary);
+  color: var(--color-text);
+}
+
+/* ===== PAGE-LAYOUT (main + sidebar) ===== */
+.page-layout {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 3.5rem;
+  padding: 3rem 0;
+}
+
+.page-layout__main {
+  min-width: 0; /* prevent overflow */
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar__section {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  padding: 1.75rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+}
+
+.sidebar__title {
+  margin-top: 0;
+  font-size: 1.1rem;
+  color: var(--color-text);
+  border-bottom: 2px solid var(--color-primary);
+  padding-bottom: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.sidebar__nav {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar__nav li {
+  margin-bottom: 0.75rem;
+}
+
+.sidebar__nav a {
+  color: var(--color-text-light);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.sidebar__nav a:hover {
+  color: var(--color-accent);
+}
+
+/* Subscription Form & Sidebar Inputs */
+.sidebar__section form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.sidebar__section input[type="text"],
+.sidebar__section input[type="email"] {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  font-family: var(--font-main);
+  font-size: 0.95rem;
+  background: var(--color-bg);
+  transition: all 0.2s;
+}
+
+.sidebar__section input:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(229, 169, 169, 0.2);
+}
+
+.sidebar__section button,
+.sidebar__section input[type="submit"] {
+  width: 100%;
+}
+
+.sidebar__banner {
+  background: var(--color-primary);
+  color: var(--color-text);
+  border: none;
+  border-radius: 16px;
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  box-shadow: 0 8px 24px rgba(212, 226, 212, 0.4);
+  transition: transform 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar__banner:hover {
+  transform: translateY(-4px);
+}
+
+.sidebar__banner-text {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+/* ===== CARDS ===== */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin: 2.5rem 0;
+}
+
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+  display: flex;
+  flex-direction: column;
+}
+
+.card:hover {
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.06);
+  transform: translateY(-6px);
+  border-color: var(--color-primary);
+}
+
+.card__title {
+  color: var(--color-text);
+  margin-top: 0;
+  font-size: 1.25rem;
+}
+
+.card__text {
+  color: var(--color-text-light);
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+  flex-grow: 1;
+}
+
+.card__link {
+  display: inline-block;
+  margin-top: auto;
+}
+
+
+
+/* ===== CODE BLOCKS ===== */
+pre, .code-block {
+  background: #2D3748; /* Элегантный темный фон для кода */
+  color: #E2E8F0;
+  border-radius: 12px;
+  padding: 1.5rem;
+  overflow-x: auto;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin: 2rem 0;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+}
+
+pre code, .code-block code {
+  color: inherit;
+  background: none;
+  font-family: 'Consolas', 'Monaco', monospace;
+}
+
+/* ===== TABLES ===== */
+.api-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 2.5rem 0;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+}
+
+.api-table thead {
+  background: var(--color-primary);
+  color: var(--color-text);
+}
+
+.api-table th,
+.api-table td {
+  padding: 1rem 1.25rem;
+  text-align: left;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.api-table th {
+  font-weight: 600;
+}
+
+.api-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.api-table tbody tr:nth-child(even) {
+  background: var(--color-bg);
+}
+
+.api-table tbody tr:hover {
+  background: rgba(212, 226, 212, 0.3);
+}
+
+/* ===== CONTACT-FORM ===== */
+.contact-form {
+  max-width: 600px;
+  background: var(--color-surface);
+  padding: 2.5rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+  border: 1px solid var(--color-border);
+  margin-top: 2rem;
+}
+
+.contact-form__group {
+  margin-bottom: 1.25rem;
+}
+
+/* Global Input Styles for Contact Form */
+.field input, 
+.field select, 
+.field textarea {
+  width: 100%;
+  padding: 0.85rem 1.25rem;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  font-family: var(--font-main);
+  font-size: 1rem;
+  background: var(--color-bg);
+  transition: all 0.2s;
+  color: var(--color-text);
+}
+
+.field input:focus, 
+.field select:focus, 
+.field textarea:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(229, 169, 169, 0.2);
+}
+
+.field .label {
+  font-weight: 500;
+  color: var(--color-text-light);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+/* Buttons */
+.button, button, input[type="submit"] {
+  display: inline-block;
+  background: var(--color-accent);
+  color: var(--color-white);
+  border: none;
+  border-radius: 8px;
+  padding: 0.85rem 1.5rem;
+  font-family: var(--font-main);
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  text-align: center;
+}
+
+.button:hover, button:hover, input[type="submit"]:hover {
+  background: var(--color-accent-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(229, 169, 169, 0.4);
+}
+
+.button.-secondary {
+  background: var(--color-primary);
+  color: var(--color-text);
+}
+
+.button.-secondary:hover {
+  background: var(--color-primary-dark);
+  box-shadow: 0 4px 12px rgba(212, 226, 212, 0.5);
+  color: var(--color-text);
+}
+
+/* ===== SITE-FOOTER ===== */
+.site-footer {
+  background: var(--color-surface);
+  color: var(--color-text-light);
+  margin-top: auto;
+  padding: 3rem 0 1.5rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.site-footer h4 {
+  color: var(--color-text);
+  margin-top: 0;
+  font-size: 1.1rem;
+}
+
+.site-footer a {
+  color: var(--color-text-light);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.site-footer a:hover {
+  color: var(--color-accent);
+}
+
+.site-footer ul {
+  list-style: none;
+  padding: 0;
+}
+
+.site-footer ul li {
+  margin-bottom: 0.5rem;
+}
+
+.site-footer__copy {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-border);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+/* ===== HERO ===== */
+.hero {
+  text-align: center;
+  padding: 4rem 0 3rem;
+}
+
+.hero__title {
+  color: var(--color-text);
+  font-size: 2.75rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  margin-bottom: 1rem;
+}
+
+.hero__subtitle {
+  color: var(--color-text-light);
+  font-size: 1.25rem;
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* ===== RESPONSIVE — Tablet (< 992px) ===== */
+@media (max-width: 991px) {
+  .page-layout {
+    grid-template-columns: 1fr 240px;
+    gap: 2.5rem;
+  }
+
+  .cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .site-nav__link {
+    font-size: 0.85rem;
+    padding: 0.5rem 0.75rem;
+  }
+}
+
+/* ===== RESPONSIVE — Mobile (< 768px) ===== */
+@media (max-width: 767px) {
+  .site-header__burger {
+    display: flex;
+  }
+
+  .site-nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+    z-index: 99;
+    max-height: calc(100vh - 70px); /* Ограничиваем высоту меню размером экрана */
+    overflow-y: auto; /* Добавляем вертикальный скролл */
+    -webkit-overflow-scrolling: touch; /* Плавный скролл на iOS */
+  }
+
+  .site-nav--open {
+    display: block;
+  }
+
+  .site-nav__list {
+    flex-direction: column;
+    padding: 1rem;
+    gap: 0.25rem;
+  }
+
+  .site-nav__link {
+    display: block;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    border-radius: 6px;
+  }
+
+  .page-layout {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 1.5rem 0;
+  }
+
+  .cards {
+    grid-template-columns: 1fr;
+  }
+
+  .hero {
+    padding: 2.5rem 0;
+  }
+
+  .hero__title {
+    font-size: 1.75rem;
+  }
+
+  .hero__subtitle {
+    font-size: 1.1rem;
+  }
+
+  .api-table {
+    display: block;
+    overflow-x: auto;
+  }
+}
+
+/* =========================================
+   OVERRIDES FOR UX FIXES
+   ========================================= */
+html {
+  scroll-behavior: smooth;
+}
+
+.wrapper {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+
+.video-container {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  margin: 2.5rem auto;
+  border-radius: 16px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--color-border);
+  background: var(--color-bg);
+}
+
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: 16px;
+}
+
+.page-layout__main p {
+  text-indent: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.security-schema {
+  width: 65%;
+  max-width: 800px;
+  display: block;
+  margin: 2rem auto;
+}
+
+/* Отступ для якорных ссылок (чтобы заголовки не прятались под sticky-шапку) */
+h1, h2, h3, h4, h5, h6 {
+  scroll-margin-top: 6rem;
+}
+
+/* Подложка для главного контента */
+.page-layout__main {
+  background: var(--color-surface);
+  padding: 3rem 4rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+  border: 1px solid var(--color-border);
+}
+
+@media (max-width: 767px) {
+  .page-layout__main {
+    padding: 1.5rem 1.25rem;
+    border-radius: 12px;
+  }
+}
+
+/* Прикрепляем сайдбар при скролле */
+.page-layout__sidebar {
+  align-self: start;
+  position: sticky;
+  top: 6rem;
+}
+
+
+
+/* Альтернативное решение: уплотняем сайдбар, чтобы он влезал по высоте без скролла */
+.page-layout__sidebar {
+  max-height: none;
+  overflow-y: visible;
+}
+
+.sidebar__section {
+  padding: 1.25rem !important; /* Уменьшаем внутренние отступы (было 1.75rem) */
+  margin-bottom: 1rem !important; /* Уменьшаем расстояние между блоками (было 2rem) */
+}
+
+.sidebar__title {
+  font-size: 1rem !important;
+  margin-bottom: 0.5rem !important;
+  padding-bottom: 0.5rem !important;
+}
+
+.sidebar__section form {
+  gap: 0.5rem !important; /* Уменьшаем отступы в форме */
+}
+
+.sidebar__banner {
+  padding: 1.5rem 1rem !important; /* Уменьшаем баннер */
+}
+
+.sidebar__banner-text {
+  font-size: 1rem !important;
+}
+/* ===== ENHANCED TYPOGRAPHY (Lists & Inline Code) ===== */
+.page-layout__main ul li,
+.page-layout__main ol li {
+  margin-bottom: 0.75rem;
+}
+
+.page-layout__main ul ul,
+.page-layout__main ol ol,
+.page-layout__main ul ol,
+.page-layout__main ol ul {
+  margin-top: 0.5rem;
+  margin-bottom: 0;
+}
+
+code {
+  font-family: 'Consolas', 'Monaco', monospace;
+  font-size: 0.9em;
+  background-color: #F1F5F9;
+  color: #000000;
+  border: 1px solid #E2E8F0;
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+}
+
+pre code, .code-block code {
+  padding: 0;
+  background: transparent;
+  color: inherit;
+  font-size: 1em;
+  border: none;
+}

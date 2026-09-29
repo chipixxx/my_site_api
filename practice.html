@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Практика: работа с API в JavaScript - API в веб-разработке</title>
+  <link rel="stylesheet" href="https://unpkg.com/cutestrap@8.0.2/dist/css/cutestrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/jpeg" href="img/favicon.jpg">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrapper -wide">
+      <div class="site-header__inner">
+        <a href="index.html" class="site-header__logo">🔗 API Guide</a>
+        <button class="site-header__burger" aria-label="Открыть меню" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+        <nav class="site-nav" id="main-nav">
+          <ul class="site-nav__list">
+            <li><a href="index.html" class="site-nav__link">Главная</a></li>
+            <li><a href="what-is-api.html" class="site-nav__link">Что такое API</a></li>
+            <li><a href="rest-api.html" class="site-nav__link">REST API</a></li>
+            <li><a href="formats.html" class="site-nav__link">JSON и XML</a></li>
+            <li><a href="popular-api.html" class="site-nav__link">Популярные API</a></li>
+            <li><a href="practice.html" class="site-nav__link site-nav__link--active">Практика</a></li>
+            <li><a href="security.html" class="site-nav__link">Безопасность</a></li>
+            <li><a href="contacts.html" class="site-nav__link">Контакты</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrapper -wide">
+    <div class="page-layout">
+      <main class="page-layout__main">
+        <h1>Практика: работа с API в JavaScript</h1>
+
+        <section>
+          <p>В современной веб-разработке непрерывный асинхронный обмен данными между клиентской частью приложения и удаленными серверами является фундаментом построения интерактивных сайтов. Загрузка карточек товаров, фильтрация данных в каталоге, аутентификация пользователей и сохранение информации в базу данных выполняются в фоновом режиме по технологии AJAX (Asynchronous JavaScript and XML) без перезагрузки всей веб-страницы. Это лежит в основе концепции современных одностраничных приложений (Single Page Applications, SPA).</p>
+
+          <p>Исторически для отправки сетевых запросов из браузера использовался объект <code>XMLHttpRequest</code>. Однако его интерфейс требовал написания объемного шаблонного кода, привязки множества слушателей событий через функции обратного вызова (что часто приводило к печально известному явлению «Callback Hell») и не имел нативной поддержки промисов. В современном стандарте JavaScript на смену устаревшим подходам появился современный интерфейс - <strong>Fetch API</strong>.</p>
+        </section>
+
+        <!-- Fetch API Explanation -->
+        <section>
+          <h2 id="section-1">Основы и архитектура Fetch API</h2>
+          <p><strong>Fetch API</strong> - это встроенный в среду выполнения современных браузеров интерфейс для отправки сетевых HTTP/HTTPS-запросов и получения удаленных ресурсов. В его основе лежит использование механизма <code>Promise</code> (промисов), что обеспечивает чистый, декларативный и легко масштабируемый код управления асинхронными сетевыми операциями.</p>
+
+          <p>Синтаксис базового вызова выглядит как <code>fetch(resource, [options])</code>, где первый аргумент представляет собой целевой URL-адрес конечной точки API, а второй необязательный аргумент позволяет сконфигурировать HTTP-метод (GET, POST, PUT, DELETE), передать необходимые заголовки (Headers), тело запроса (Body), а также настроить режим кросс-доменных запросов (CORS) и политику передачи куки (Credentials).</p>
+
+          <p>Критически важной особенностью <code>fetch()</code>, о которой часто забывают начинающие разработчики, является специфика обработки сетевых статусов. Промис, возвращаемый функцией <code>fetch()</code>, переходит в состояние ошибки (reject) <strong>только при физическом сетевом сбое</strong> - например, при обрыве интернет-соединения, невозможности разрешить доменное имя через DNS или недоступности сервера. Если сервер ответил статусом HTTP-ошибки (такими как <code>404 Not Found</code>, <code>401 Unauthorized</code> или <code>500 Internal Server Error</code>), с точки зрения сетевого протокола запрос успешно завершился, и промис перейдет в состояние <code>fulfilled</code>! По этой причине в коде обязательно нужно проверять булево свойство ответа <code>response.ok</code> (равное <code>true</code> при статус-кодах 200-299) или целочисленный статус <code>response.status</code>.</p>
+
+          <p>Тело ответа (Response Body) передается по сети в виде непрерывного байтового потока (ReadableStream). Чтобы преобразовать его в пригодный для использования формат данных, объект Response предоставляет специальные асинхронные методы: <code>response.json()</code> для парсинга JSON в JavaScript-объект, <code>response.text()</code> для получения сырого текста/HTML, а также <code>response.blob()</code> для бинарных данных (картинок, файлов).</p>
+        </section>
+
+        <!-- Code Examples GET and POST -->
+        <section>
+          <h2 id="section-2">Примеры выполнения GET и POST запросов</h2>
+          <p>Рассмотрим эталонные практические примеры выполнения сетевых запросов с использованием традиционных цепочек промисов (<code>.then()</code> и <code>.catch()</code>) на базе тестового REST-сервиса JSONPlaceholder.</p>
+
+          <h3>1. Выполнение GET-запроса на получение данных</h3>
+          <p>Запрос методом <code>GET</code> используется для чтения информации с сервера. Он не содержит тела (body) и передает параметры фильтрации исключительно через строку запроса (Query String) в URL:</p>
+
+          <pre><code class="language-javascript">// Функция загрузки публикации по ее идентификатору
+function getPostById(postId) {
+  const url = `https://jsonplaceholder.typicode.com/posts/${postId}`;
+
+  fetch(url)
+    .then((response) => {
+      // 1. Проверяем HTTP-статус ответа (коды 200-299)
+      if (!response.ok) {
+        throw new Error(`Ошибка HTTP! Статус: ${response.status} (${response.statusText})`);
+      }
+      // 2. Десериализуем JSON-поток в JavaScript-объект
+      return response.json();
+    })
+    .then((postData) => {
+      // 3. Успешная обработка полученных данных
+      console.log('Данные публикации получены:', postData);
+      renderPostToDom(postData);
+    })
+    .catch((error) => {
+      // 4. Перехват как физических сетевых сбоев, так и выброшенных ошибок HTTP
+      console.error('Не удалось загрузить данные:', error.message);
+      showErrorMessage('Произошла ошибка при загрузке публикации.');
+    });
+}</code></pre>
+
+          <h3>2. Выполнение POST-запроса для создания новой записи</h3>
+          <p>Метод <code>POST</code> применяется для передачи данных на сервер с целью создания новой сущности в базе данных. Для корректной обработки данных сервером необходимо явно передать заголовок <code>Content-Type: application/json</code>, а сам JavaScript-объект сериализовать в строку с помощью метода <code>JSON.stringify()</code>:</p>
+
+          <pre><code class="language-javascript">// Функция отправки новой публикации на сервер
+function createNewPost(postPayload) {
+  const url = 'https://jsonplaceholder.typicode.com/posts';
+
+  fetch(url, {
+    method: 'POST', // Указываем метод запроса
+    headers: {
+      'Content-Type': 'application/json; charset=UTF-8', // Тип содержимого тела запроса
+      'Accept': 'application/json'                       // Ожидаемый тип ответа
+    },
+    body: JSON.stringify(postPayload) // Преобразуем объект в JSON-строку
+  })
+    .then((response) => {
+      // Успешным созданием записи обычно считается код 201 Created
+      if (!response.ok) {
+        throw new Error(`Ошибка сервера при сохранении: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then((createdItem) => {
+      console.log('Новый элемент успешно создан на сервере:', createdItem);
+      showNotification(`Запись успешно добавлена с ID: ${createdItem.id}`);
+    })
+    .catch((error) => {
+      console.error('Ошибка при отправке POST-запроса:', error.message);
+    });
+}
+
+// Пример вызова с объектом данных:
+createNewPost({
+  title: 'Изучаем REST API и Fetch',
+  body: 'Практическое руководство по сетевым запросам в JavaScript.',
+  userId: 835
+});</code></pre>
+        </section>
+
+        <!-- async/await Explanation -->
+        <section>
+          <h2 id="section-3">Современный синтаксис async/await</h2>
+          <p>Начиная со стандарта ECMAScript 2017 (ES8), в JavaScript появилась новая конструкция для работы с асинхронным кодом - ключевые слова <code>async</code> и <code>await</code>. Они не меняют внутренней природы промисов, однако позволяют писать асинхронный сетевой код в линейном, синхронном стиле, кардинально улучшая читаемость, упрощая отладку и избавляя от ветвления вложенных функций обратного вызова.</p>
+
+          <p>Ключевое слово <code>async</code> помещается перед определением функции и гарантирует, что возвращаемое значение функции всегда будет автоматически обернуто в <code>Promise</code>. Внутри тела такой функции можно применять оператор <code>await</code>, который приостанавливает выполнение функции в данной точке до тех пор, пока целевой промис не перейдет в состояние разрешения (resolve) или отклонения (reject). Важно подчеркнуть: оператор <code>await</code> не блокирует поток браузера (UI Event Loop), позволяя интерфейсу оставаться отзывчивым к кликам пользователя и анимациям.</p>
+
+          <p>Для обработки ошибок при использовании <code>async/await</code> применяется стандартная языковая конструкция <code>try...catch...finally</code>, которая объединяет в одном блоке сетевые ошибки, сбои синтаксического анализа JSON и пользовательские исключения бизнес-логики:</p>
+
+          <pre><code class="language-javascript">// Асинхронная функция загрузки профиля пользователя и погодных данных
+async function fetchUserProfileAndWeather(username, city) {
+  const loadingIndicator = document.getElementById('loader');
+  loadingIndicator.style.display = 'block';
+
+  try {
+    // Выполняем первый запрос к API пользователей
+    const userResponse = await fetch(`https://api.example.com/users/${username}`);
+    if (!userResponse.ok) {
+      throw new Error(`Пользователь не найден (код: ${userResponse.status})`);
+    }
+    const userData = await userResponse.json();
+
+    // Выполняем второй зависимый запрос к погодному API
+    const weatherResponse = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=DEMO_KEY`);
+    if (!weatherResponse.ok) {
+      throw new Error(`Не удалось получить сводку погоды для ${city}`);
+    }
+    const weatherData = await weatherResponse.json();
+
+    // Обновляем DOM-интерфейс
+    updateDashboardUI(userData, weatherData);
+
+  } catch (error) {
+    // Централизованная обработка всех ошибок из блока try
+    console.error('Критический сбой асинхронной операции:', error.message);
+    displayAlertBanner(`Ошибка: ${error.message}`);
+
+  } finally {
+    // Блок finally выполняется гарантированно в любом исходе
+    loadingIndicator.style.display = 'none';
+  }
+}</code></pre>
+        </section>
+
+        <!-- Educational Video Section -->
+        <section>
+          <h2 id="section-4">Обучающий видеоурок: работа с API и Fetch в JavaScript</h2>
+          <p>Для закрепления теоретического материала и визуального знакомства с процессом отладки сетевых запросов в панели инструментов разработчика (Chrome DevTools / Firefox Developer Tools) рекомендуем просмотреть подробный видеоурок по работе с API:</p>
+
+          <div class="video-container">
+            <iframe 
+              src="https://rutube.ru/play/embed/6e904a4975bc0950c8ee03e0f5c21617/" 
+              title="Обучающее видео по работе с Fetch API (RuTube)" 
+              width="560" 
+              height="315" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+              allowfullscreen>
+            </iframe>
+          </div>
+
+          <p>В представленном видеоуроке наглядно разбираются ключевые концепции: отправка сетевых запросов через <code>fetch()</code>, вкладка <em>Network</em> в консоли разработчика, анализ HTTP-заголовков ответа, десериализация структуры JSON, а также правильная обработка сетевых ошибок при взаимодействии с открытыми веб-сервисами.</p>
+        </section>
+
+        <!-- Ordered list of steps -->
+        <section>
+          <h2 id="section-5">Пошаговый алгоритм интеграции API в веб-проект</h2>
+          <p>При подключении любого внешнего сервиса рекомендуется следовать строгой инженерной методологии. Ниже приведен пошаговый чеклист успешной интеграции стороннего API в веб-приложение:</p>
+
+          <ol>
+            <li><strong>Изучение официальной документации и спецификации API:</strong> ознакомьтесь со списком доступных эндпоинтов, поддерживаемыми HTTP-методами, структурой параметров в URL и требованиями к телу запроса.</li>
+            <li><strong>Регистрация аккаунта разработчика и получение токена:</strong> зарегистрируйтесь на портале провайдера, создайте проект и сгенерируйте API-ключ (API Key) или токен доступа (OAuth Access Token).</li>
+            <li><strong>Предварительное тестирование запросов в специализированных клиентах:</strong> перед написанием JavaScript-кода протестируйте вызовы через Postman, Insomnia или консольную утилиту <code>curl</code>, чтобы убедиться в валидности учетных данных и изучить точную структуру возвращаемого JSON.</li>
+            <li><strong>Обеспечение безопасности и сокрытие ключей доступа:</strong> никогда не публикуйте приватные API-ключи в открытых репозиториях GitHub. Храните их в переменных окружения (файлы <code>.env</code>) и, при необходимости, организуйте проксирование запросов через собственный сервер (Backend-For-Frontend).</li>
+            <li><strong>Реализация сетевого слоя в коде фронтенда:</strong> напишите изолированные функции с использованием <code>fetch()</code> или библиотеки <code>axios</code>, обязательно включив проверку свойства <code>response.ok</code> и блок <code>try...catch</code> для перехвата исключений.</li>
+            <li><strong>Проектирование состояний пользовательского интерфейса (UI States):</strong> реализуйте индикаторы загрузки (спиннеры, скелетоны), понятные уведомления об успешном выполнении операции и информативные сообщения о возникших сетевых сбоях.</li>
+            <li><strong>Безопасный рендеринг данных в DOM:</strong> обрабатывайте полученный JSON и динамически создавайте HTML-элементы, избегая уязвимостей межсайтового скриптинга (XSS) с помощью свойства <code>textContent</code> вместо прямого использования <code>innerHTML</code>.</li>
+            <li><strong>Оптимизация производительности и соблюдение лимитов (Rate Limiting):</strong> настройте кэширование статических данных в <code>localStorage</code> или <code>sessionStorage</code>, используйте техники <code>debounce</code> и <code>throttle</code> для поиска при вводе текста, чтобы не превысить лимиты тарифного плана API.</li>
+          </ol>
+
+          <p>Соблюдение данного структурированного подхода гарантирует высокую надежность разрабатываемого веб-приложения, превосходную скорость отклика интерфейса и устойчивость к любым непредвиденным сетевым сбоям.</p>
+        </section>
+      </main>
+
+      <aside class="page-layout__sidebar sidebar">
+<div class="sidebar__section">
+  <h3 class="sidebar__title">Оглавление</h3>
+  <ul class="sidebar__nav toc-list">
+    <li><a href="#section-1">Основы и архитектура Fetch API</a></li>
+<li><a href="#section-2">Примеры выполнения GET и POST запросов</a></li>
+<li><a href="#section-3">Современный синтаксис async/await</a></li>
+<li><a href="#section-4">Обучающий видеоурок: работа с API и Fetch в JavaScript</a></li>
+<li><a href="#section-5">Пошаговый алгоритм интеграции API в веб-проект</a></li>
+
+  </ul>
+</div>
+        
+        <div class="sidebar__section">
+          <h3 class="sidebar__title">Подписывайся, чтоб узнавать больше!</h3>
+          <form class="sidebar__form" action="mailto:sevrukmv5@mail.ru" method="post" enctype="text/plain">
+            <label class="field">
+              <input type="email" placeholder="Email" required>
+              <span class="label">Ваш email</span>
+            </label>
+            <button type="submit" class="button -block">Подписаться</button>
+          </form>
+        </div>
+        <div class="sidebar__section sidebar__banner">
+          <p class="sidebar__banner-text">📚 Изучайте API - стройте современные веб-приложения!</p>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="wrapper -wide">
+      <div class="grid -medium" style="--columns: 3;">
+        <div>
+          <h4>О проекте</h4>
+          <p>Учебный сайт по теме «Использование API сервисов при разработке сайтов».</p>
+        </div>
+        <div>
+            <h4>Контакты</h4>
+            <p>Студент: Севрук Михаил Витальевич</p>
+            <p>Группа: 835</p>
+            <ul>
+              <li><a href="mailto:sevrukmv5@mail.ru">Email: sevrukmv5@mail.ru</a></li>
+              <li><a href="https://t.me/ushastx" target="_blank" rel="noopener noreferrer">Telegram: @ushastx</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4>Ссылки</h4>
+            <ul>
+              <li><a href="https://rutube.ru/video/6e904a4975bc0950c8ee03e0f5c21617/" target="_blank" rel="noopener noreferrer">Видео</a></li>
+              <li><a href="https://github.com/ushastx" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+            </ul>
+          </div>
+      <p class="ta-center site-footer__copy">© 2026 Севрук Михаил Витальевич. Все права защищены.</p>
+    </div>
+  </footer>
+  <script src="js/main.js"></script>
+</body>
+</html>

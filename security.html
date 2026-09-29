@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Безопасность при работе с API - API в веб-разработке</title>
+  <link rel="stylesheet" href="https://unpkg.com/cutestrap@8.0.2/dist/css/cutestrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/jpeg" href="img/favicon.jpg">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrapper -wide">
+      <div class="site-header__inner">
+        <a href="index.html" class="site-header__logo">🔗 API Guide</a>
+        <button class="site-header__burger" aria-label="Открыть меню" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+        <nav class="site-nav" id="main-nav">
+          <ul class="site-nav__list">
+            <li><a href="index.html" class="site-nav__link">Главная</a></li>
+            <li><a href="what-is-api.html" class="site-nav__link">Что такое API</a></li>
+            <li><a href="rest-api.html" class="site-nav__link">REST API</a></li>
+            <li><a href="formats.html" class="site-nav__link">JSON и XML</a></li>
+            <li><a href="popular-api.html" class="site-nav__link">Популярные API</a></li>
+            <li><a href="practice.html" class="site-nav__link">Практика</a></li>
+            <li><a href="security.html" class="site-nav__link site-nav__link--active">Безопасность</a></li>
+            <li><a href="contacts.html" class="site-nav__link">Контакты</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrapper -wide">
+    <div class="page-layout">
+      <main class="page-layout__main">
+        <h1>Безопасность при работе с API</h1>
+        
+        <p>Современные веб-приложения строятся на распределённой архитектуре, в которой клиентская часть активно взаимодействует с внутренними и внешними серверными интерфейсами. В такой среде безопасность API становится ключевым приоритетом разработки. Незащищённый программный интерфейс открывает злоумышленникам прямой доступ к конфиденциальным данным пользователей, бизнес-логике и внутренним базам данных компании, минуя графический интерфейс сайта.</p>
+
+        <figure style="margin: 1.5rem 0;">
+          <img src="img/api_security_diagram.jpg" srcset="img/api_security_diagram.jpg 800w" sizes="(max-width: 768px) 100vw, 800px" alt="Схема многоуровневой защиты API: от сетевого шифрования до контроля доступа и лимитов" title="Архитектура безопасности API" class="security-schema" style="border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+          <figcaption style="font-size: 0.85rem; color: #666; margin-top: 0.5rem; text-align: center;">Схема многоуровневой защиты API: от сетевого шифрования до контроля доступа и лимитов</figcaption>
+        </figure>
+
+        <section>
+          <h2 id="section-1">API-ключи и токены аутентификации</h2>
+          <p><strong>API-ключ (API Key)</strong> - это уникальная алфавитно-цифровая строка, которая передаётся клиентом серверу для идентификации вызывающего приложения или проекта. Главная задача API-ключа заключается в аутентификации приложения, учёте квот использования сервиса и сборе аналитики. Однако сам по себе API-ключ не должен использоваться для авторизации конкретного пользователя, так как он удостоверяет лишь систему или проект целиком, а не личность конечного пользователя.</p>
+          
+          <p>Для разграничения прав пользователей применяются <strong>токены доступа (Access Tokens)</strong>, среди которых наибольшую популярность приобрёл стандарт <strong>JWT (JSON Web Token)</strong>. Токен состоит из трёх частей (заголовок, полезная нагрузка и цифровая подпись) и обычно передаётся в HTTP-заголовке запроса <code>Authorization: Bearer &lt;token&gt;</code>. В отличие от постоянных статических ключей, токены имеют ограниченное время жизни (TTL), что существенно снижает ущерб в случае их перехвата.</p>
+        </section>
+
+        <section>
+          <h2 id="section-2">Протокол авторизации OAuth 2.0</h2>
+          <p><strong>OAuth 2.0</strong> - это открытый отраслевой протокол авторизации, позволяющий пользователю предоставить одному приложению ограниченный доступ к своим ресурсам на другом сервере без передачи пароля. Типичный пример в веб-разработке - вход на сайт с помощью учётной записи Google, GitHub или VK («Социальная авторизация»).</p>
+          
+          <p>В рамках спецификации OAuth 2.0 выделяют четыре ключевые роли: <em>Resource Owner</em> (пользователь, владеющий данными), <em>Client</em> (стороннее веб-приложение), <em>Authorization Server</em> (сервер авторизации) и <em>Resource Server</em> (сервер, хранящий защищённые ресурсы). Самым надёжным сценарием для веб-приложений является поток <strong>Authorization Code Flow</strong> (в связке с расширением PKCE для фронтенд-клиентов), при котором клиент получает временный код авторизации и обменивает его на кратковременный Access Token и долговременный Refresh Token через защищённый серверный канал.</p>
+        </section>
+
+        <section>
+          <h2 id="section-3">Политика CORS и безопасность в браузере</h2>
+          <p><strong>CORS (Cross-Origin Resource Sharing)</strong> - механизм безопасности современных веб-браузеров, расширяющий базовую политику одного источника (Same-Origin Policy, SOP). По умолчанию браузер блокирует асинхронные HTTP-запросы (Fetch или XMLHttpRequest), отправляемые с одного домена (origin: протокол + хост + порт) на совершенно другой, предотвращая кражу данных вредоносными скриптами.</p>
+          
+          <p>Для разрешения легитимных междоменных запросов сервер должен явно отправлять специальные HTTP-заголовки ответа, такие как <code>Access-Control-Allow-Origin</code>, <code>Access-Control-Allow-Methods</code> и <code>Access-Control-Allow-Headers</code>. Для небезопасных запросов (например, методов PUT, DELETE или запросов с нестандартными заголовками) браузер сначала отправляет предварительный проверочный запрос (<em>Preflight request</em>) методом <code>OPTIONS</code>. Неправильная конфигурация, например указание подстановочного символа <code>*</code> вместе с передачей куки и учётных данных, создаёт серьёзную уязвимость.</p>
+        </section>
+
+        <section>
+          <h2 id="section-4">Ограничение частоты запросов (Rate Limiting)</h2>
+          <p><strong>Rate Limiting (ограничение частоты запросов)</strong> - критически важная защитная мера, регламентирующая максимальное количество обращений к API за определённый временной промежуток (например, не более 100 запросов в минуту от одного IP-адреса или токена). Ограничение защищает серверную инфраструктуру от перегрузок, DoS/DDoS-атак, перебора паролей (brute force) и несанкционированного парсинга данных скрейперами.</p>
+          
+          <p>В современных архитектурах часто применяются алгоритмы «корзины токенов» (Token Bucket) или «скользящего окна» (Sliding Window). При превышении лимита сервер возвращает клиенту стандартный HTTP-статус <strong>429 Too Many Requests</strong> вместе с информационными заголовками <code>X-RateLimit-Limit</code>, <code>X-RateLimit-Remaining</code> и <code>Retry-After</code>, сообщающими, сколько времени клиенту необходимо подождать до возобновления приёма запросов.</p>
+        </section>
+
+        <section>
+          <h2 id="section-5">Лучшие практики обеспечения безопасности API</h2>
+          <p>Для построения отказоустойчивых и защищённых интерфейсов разработчикам рекомендуется следовать комплексным принципам безопасности:</p>
+          <ul>
+            <li><strong>Обязательное шифрование трафика (HTTPS / TLS 1.3):</strong> Все данные, включая заголовки авторизации и тела запросов, должны передаваться исключительно по защищённому протоколу, исключающему перехват типа «человек посередине» (MitM).</li>
+            <li><strong>Строгая валидация и очистка входящих данных:</strong> Никогда не доверяйте входящим параметрам от клиента; проверяйте типы, формат, длину и экранируйте спецсимволы для защиты от SQL/NoSQL инъекций и XSS.</li>
+            <li><strong>Принцип наименьших привилегий (Least Privilege):</strong> Выдавайте токенам и API-ключам минимально необходимый набор разрешений (scopes), достаточный только для выполнения конкретной функции.</li>
+            <li><strong>Безопасное хранение секретов:</strong> Храните ключи в переменных окружения (Environment Variables) или специализированных хранилищах (HashiCorp Vault, AWS Secrets Manager), никогда не коммитьте их в Git.</li>
+            <li><strong>Маскирование системных ошибок:</strong> Не отдавайте клиентам стектрейсы и детали внутренних баз данных; клиенту достаточно понятного кода ошибки (RFC 7807 Problem Details), а подробности фиксируйте во внутреннем журнале.</li>
+            <li><strong>Регулярная ротация и механизм отзыва ключей:</strong> Автоматизируйте процедуру периодической смены секретов и внедряйте возможность мгновенного аннулирования скомпрометированных токенов (Revocation List).</li>
+            <li><strong>Централизованный аудит и мониторинг аномалий:</strong> Отслеживайте всплески трафика, ошибки авторизации 401/403 и подозрительные паттерны обращений для превентивного реагирования на инциденты.</li>
+          </ul>
+        </section>
+
+        <blockquote style="border-left: 4px solid var(--color-accent); padding: 1rem 1.5rem; margin: 1.5rem 0; background: var(--color-sidebar-bg); border-radius: 0 6px 6px 0;">
+          <p style="margin: 0; font-style: italic;"><strong>Важное правило безопасности:</strong> Никогда не храните секретные API-ключи, приватные токены и сертификаты в клиентском коде JavaScript или публичных репозиториях. Любой код, выполняющийся в браузере пользователя, доступен для инспекции через инструменты разработчика (DevTools). Для работы со сторонними сервисами всегда используйте промежуточный бэкенд (Backend for Frontend, BFF), скрывающий секретные ключи на защищённом сервере.</p>
+        </blockquote>
+      </main>
+
+      <aside class="page-layout__sidebar sidebar">
+<div class="sidebar__section">
+  <h3 class="sidebar__title">Оглавление</h3>
+  <ul class="sidebar__nav toc-list">
+    <li><a href="#section-1">API-ключи и токены аутентификации</a></li>
+<li><a href="#section-2">Протокол авторизации OAuth 2.0</a></li>
+<li><a href="#section-3">Политика CORS и безопасность в браузере</a></li>
+<li><a href="#section-4">Ограничение частоты запросов (Rate Limiting)</a></li>
+<li><a href="#section-5">Лучшие практики обеспечения безопасности API</a></li>
+
+  </ul>
+</div>
+        
+        <div class="sidebar__section">
+          <h3 class="sidebar__title">Подписывайся, чтоб узнавать больше!</h3>
+          <form class="sidebar__form" action="mailto:sevrukmv5@mail.ru" method="post" enctype="text/plain">
+            <label class="field">
+              <input type="email" placeholder="Email" required>
+              <span class="label">Ваш email</span>
+            </label>
+            <button type="submit" class="button -block">Подписаться</button>
+          </form>
+        </div>
+        <div class="sidebar__section sidebar__banner">
+          <p class="sidebar__banner-text">📚 Изучайте API - стройте современные веб-приложения!</p>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="wrapper -wide">
+      <div class="grid -medium" style="--columns: 3;">
+        <div>
+          <h4>О проекте</h4>
+          <p>Учебный сайт по теме «Использование API сервисов при разработке сайтов».</p>
+        </div>
+        <div>
+            <h4>Контакты</h4>
+            <p>Студент: Севрук Михаил Витальевич</p>
+            <p>Группа: 835</p>
+            <ul>
+              <li><a href="mailto:sevrukmv5@mail.ru">Email: sevrukmv5@mail.ru</a></li>
+              <li><a href="https://t.me/ushastx" target="_blank" rel="noopener noreferrer">Telegram: @ushastx</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4>Ссылки</h4>
+            <ul>
+              <li><a href="https://rutube.ru/video/6e904a4975bc0950c8ee03e0f5c21617/" target="_blank" rel="noopener noreferrer">Видео</a></li>
+              <li><a href="https://github.com/ushastx" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+            </ul>
+          </div>
+      <p class="ta-center site-footer__copy">© 2026 Севрук Михаил Витальевич. Все права защищены.</p>
+    </div>
+  </footer>
+  <script src="js/main.js"></script>
+</body>
+</html>

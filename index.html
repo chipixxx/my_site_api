@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Главная - API в веб-разработке</title>
+  <link rel="stylesheet" href="https://unpkg.com/cutestrap@8.0.2/dist/css/cutestrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/jpeg" href="img/favicon.jpg">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrapper -wide">
+      <div class="site-header__inner">
+        <a href="index.html" class="site-header__logo">🔗 API Guide</a>
+        <button class="site-header__burger" aria-label="Открыть меню" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+        <nav class="site-nav" id="main-nav">
+          <ul class="site-nav__list">
+            <li><a href="index.html" class="site-nav__link site-nav__link--active">Главная</a></li>
+            <li><a href="what-is-api.html" class="site-nav__link">Что такое API</a></li>
+            <li><a href="rest-api.html" class="site-nav__link">REST API</a></li>
+            <li><a href="formats.html" class="site-nav__link">JSON и XML</a></li>
+            <li><a href="popular-api.html" class="site-nav__link">Популярные API</a></li>
+            <li><a href="practice.html" class="site-nav__link">Практика</a></li>
+            <li><a href="security.html" class="site-nav__link">Безопасность</a></li>
+            <li><a href="contacts.html" class="site-nav__link">Контакты</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrapper -wide">
+    <div class="page-layout">
+      <main class="page-layout__main">
+        <section class="hero">
+          <h1 class="hero__title">Использование API сервисов при разработке сайтов</h1>
+          <p class="hero__subtitle">Практическое образовательное руководство по архитектуре, интеграции и безопасности веб-интерфейсов для современных разработчиков</p>
+        </section>
+
+        <section>
+          <h2 id="section-1">Роль API в современной веб-инженерии</h2>
+          <p>В эпоху распределенных систем и облачных вычислений веб-разработка претерпела фундаментальную трансформацию. Классические монолитные архитектуры, в которых пользовательский интерфейс, бизнес-логика и слой базы данных были неразрывно связаны в рамках единого серверного процесса, уступили место компонуемым экосистемам. Центральным связующим звеном в этой современной парадигме выступает Application Programming Interface (API) - стандартизированный интерфейс прикладного программирования, обеспечивающий прозрачный обмен данными между независимыми программными компонентами.</p>
+
+          <p>Современный интернет фактически функционирует на базе сетевых интерфейсов. Каждый раз, когда пользователь заказывает такси через веб-портал, оплачивает покупку в интернет-магазине с помощью банковской карты, просматривает интерактивную карту города или авторизуется в один клик через учетную запись Google или VK, под капотом происходит скоординированная серия асинхронных API-запросов. Веб-разработчикам больше не требуется создавать с нуля картографические движки, процессинговые центры или сложные алгоритмы машинного обучения - достаточно подключить проверенные внешние сервисы через формализованные контракты взаимодействия.</p>
+
+          <p>Внедрение API кардинально сокращает время вывода программных продуктов на рынок (Time-to-Market). Команда разработки может всецело сфокусироваться на уникальной бизнес-логике и ценности своего проекта, делегируя рутинные задачи - транзакционную рассылку сообщений, хранение медиафайлов в CDN, геокодирование, сбор аналитики - специализированным провайдерам. Это не только ускоряет релизный цикл, но и снижает совокупные затраты на разработку и последующую поддержку инфраструктуры.</p>
+
+          <p>Широкое распространение подхода API-First стало ключевым отраслевым стандартом. При проектировании веб-сервиса разработчики сначала определяют строгие спецификации интерфейсов (например, OpenAPI/Swagger), а затем параллельно реализуют клиентскую и серверную части. Это открывает возможность создавать адаптивные веб-приложения (Single Page Applications, Progressive Web Apps), нативные мобильные клиенты для iOS и Android, десктопные программы и партнерские интеграции, работающие с единым бэкендом и общими правилами валидации данных.</p>
+        </section>
+
+        <section>
+          <h2 id="section-2">Ключевые темы и разделы сайта</h2>
+          <div class="cards">
+            <article class="card">
+              <h3 class="card__title">REST API</h3>
+              <p class="card__text">Принципы архитектуры REST: ресурсы, методы HTTP, коды состояния ответов, идемпотентность и стандарты построения надежных сервисов.</p>
+              <a href="rest-api.html" class="button -secondary card__link">Изучить REST API</a>
+            </article>
+
+            <article class="card">
+              <h3 class="card__title">Популярные API</h3>
+              <p class="card__text">Обзор наиболее востребованных сервисов: картография (Яндекс, Google), платежные шлюзы, погодные данные и социальные платформы.</p>
+              <a href="popular-api.html" class="button -secondary card__link">Каталог сервисов</a>
+            </article>
+
+            <article class="card">
+              <h3 class="card__title">Практика</h3>
+              <p class="card__text">Практические примеры на JavaScript: работа с Fetch API и Axios, асинхронные запросы (async/await), обработка ошибок и кэширование.</p>
+              <a href="practice.html" class="button -secondary card__link">Перейти к коду</a>
+            </article>
+          </div>
+        </section>
+
+        <section>
+          <h2 id="section-3">Что подробно рассматривается в материалах</h2>
+          <p>Наш справочный портал создан для систематизации теоретических знаний и приобретения практических навыков по интеграции API сервисов в современные веб-решения. Программа ресурса охватывает следующие направления:</p>
+          <ul>
+            <li><strong>Фундаментальная концепция API:</strong> определение, принципы абстракции, история развития от системных вызовов и RPC до современных веб-сервисов и микросервисной архитектуры.</li>
+            <li><strong>Архитектурный стиль REST:</strong> правила моделирования ресурсов, корректный выбор методов HTTP (GET, POST, PUT, PATCH, DELETE) и семантика кодов состояния (2xx, 3xx, 4xx, 5xx).</li>
+            <li><strong>Форматы обмена данными:</strong> синтаксис и структура документов JSON и XML, парсинг, сериализация, сравнительный анализ преимуществ и сценариев их применения.</li>
+            <li><strong>Интеграция сторонних сервисов:</strong> обзор публичных API, разбор реальных сценариев внедрения картографических виджетов, систем онлайн-оплаты и прогнозных метеосервисов.</li>
+            <li><strong>Практическая разработка:</strong> реализация клиентских запросов на JavaScript, асинхронное взаимодействие с DOM-деревом, пагинация данных и отладка сетевых запросов.</li>
+            <li><strong>Безопасность и авторизация:</strong> безопасное обращение с API-ключами, протокол OAuth 2.0, токены JWT, предотвращение атак, политики CORS и ограничение частоты запросов (Rate Limiting).</li>
+          </ul>
+        </section>
+      </main>
+      <aside class="page-layout__sidebar sidebar">
+<div class="sidebar__section">
+  <h3 class="sidebar__title">Оглавление</h3>
+  <ul class="sidebar__nav toc-list">
+    <li><a href="#section-1">Роль API в современной веб-инженерии</a></li>
+<li><a href="#section-2">Ключевые темы и разделы сайта</a></li>
+<li><a href="#section-3">Что подробно рассматривается в материалах</a></li>
+
+  </ul>
+</div>
+        
+        <div class="sidebar__section">
+          <h3 class="sidebar__title">Подписывайся, чтоб узнавать больше!</h3>
+          <form class="sidebar__form" action="mailto:sevrukmv5@mail.ru" method="post" enctype="text/plain">
+            <label class="field">
+              <input type="email" placeholder="Email" required>
+              <span class="label">Ваш email</span>
+            </label>
+            <button type="submit" class="button -block">Подписаться</button>
+          </form>
+        </div>
+        <div class="sidebar__section sidebar__banner">
+          <p class="sidebar__banner-text">📚 Изучайте API - стройте современные веб-приложения!</p>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="wrapper -wide">
+      <div class="grid -medium" style="--columns: 3;">
+        <div>
+          <h4>О проекте</h4>
+          <p>Учебный сайт по теме «Использование API сервисов при разработке сайтов».</p>
+        </div>
+        <div>
+            <h4>Контакты</h4>
+            <p>Студент: Севрук Михаил Витальевич</p>
+            <p>Группа: 835</p>
+            <ul>
+              <li><a href="mailto:sevrukmv5@mail.ru">Email: sevrukmv5@mail.ru</a></li>
+              <li><a href="https://t.me/ushastx" target="_blank" rel="noopener noreferrer">Telegram: @ushastx</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4>Ссылки</h4>
+            <ul>
+              <li><a href="https://rutube.ru/video/6e904a4975bc0950c8ee03e0f5c21617/" target="_blank" rel="noopener noreferrer">Видео</a></li>
+              <li><a href="https://github.com/ushastx" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+            </ul>
+          </div>
+      <p class="ta-center site-footer__copy">© 2026 Севрук Михаил Витальевич. Все права защищены.</p>
+    </div>
+  </footer>
+  <script src="js/main.js"></script>
+</body>
+</html>

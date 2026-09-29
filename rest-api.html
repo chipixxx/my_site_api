@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>REST API - архитектурный стиль - API в веб-разработке</title>
+  <link rel="stylesheet" href="https://unpkg.com/cutestrap@8.0.2/dist/css/cutestrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/jpeg" href="img/favicon.jpg">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrapper -wide">
+      <div class="site-header__inner">
+        <a href="index.html" class="site-header__logo">🔗 API Guide</a>
+        <button class="site-header__burger" aria-label="Открыть меню" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+        <nav class="site-nav" id="main-nav">
+          <ul class="site-nav__list">
+            <li><a href="index.html" class="site-nav__link">Главная</a></li>
+            <li><a href="what-is-api.html" class="site-nav__link">Что такое API</a></li>
+            <li><a href="rest-api.html" class="site-nav__link site-nav__link--active">REST API</a></li>
+            <li><a href="formats.html" class="site-nav__link">JSON и XML</a></li>
+            <li><a href="popular-api.html" class="site-nav__link">Популярные API</a></li>
+            <li><a href="practice.html" class="site-nav__link">Практика</a></li>
+            <li><a href="security.html" class="site-nav__link">Безопасность</a></li>
+            <li><a href="contacts.html" class="site-nav__link">Контакты</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrapper -wide">
+    <div class="page-layout">
+      <main class="page-layout__main">
+        <h1>REST API - архитектурный стиль</h1>
+
+        <section>
+          <h2 id="section-1">Что такое REST и почему он стал стандартом?</h2>
+          <p>
+            <strong>REST (Representational State Transfer - «передача состояния представления»)</strong> - это архитектурный стиль взаимодействия компонентов распределенного веб-приложения, предложенный в 2000 году Роем Филдингом (Roy Fielding), одним из ключевых авторов спецификации протокола HTTP. В отличие от жестких протоколов удаленного вызова процедур (таких как SOAP или RPC), REST представляет собой не строгий стандарт или протокол, а набор принципов и архитектурных ограничений, благодаря которым веб-сервисы становятся быстрыми, надежными, масштабируемыми и удобными для модификации.
+          </p>
+          <p>
+            Веб-сервисы, спроектированные с соблюдением требований REST, называют <em>RESTful</em>. Главная идея стиля заключается в том, что вся информация в системе представляется в виде отдельных <strong>ресурсов</strong> (например, пользователь, заказ, статья, комментарий). Каждый ресурс обладает уникальным идентификатором - URL (Uniform Resource Locator). Клиенты взаимодействуют с ресурсами, отправляя стандартные HTTP-запросы и получая в ответ представление ресурса в формате JSON или XML.
+          </p>
+        </section>
+
+        <section>
+          <h2 id="section-2">Ключевые принципы архитектуры REST</h2>
+          <p>
+            Чтобы сервис можно было считать истинно RESTful, он должен удовлетворять шести фундаментальным ограничениям (constraints), сформулированным Роем Филдингом:
+          </p>
+          
+          <ol>
+            <li>
+              <strong>Клиент-серверная модель (Client-Server Architecture):</strong> 
+              Четкое разделение ответственности между пользовательским интерфейсом (клиентом) и хранением данных с бизнес-логикой (сервером). Клиент не заботится о структуре базы данных или алгоритмах хранения, а сервер не формирует верстку интерфейса. Это позволяет независимо развивать и масштабировать веб-интерфейс, мобильные приложения и серверный бэкенд.
+            </li>
+            <li>
+              <strong>Отсутствие состояния (Statelessness):</strong> 
+              Сервер не хранит информацию о текущем состоянии сессии клиента между запросами. Каждый HTTP-запрос от клиента должен быть самодостаточным - он обязан содержать все параметры, заголовки и учетные данные (например, JWT-токен или API-ключ), необходимые серверу для успешной авторизации и обработки запроса. Это гарантирует надежность и позволяет легко балансировать трафик между десятками серверов.
+            </li>
+            <li>
+              <strong>Кэшируемость ответов (Cacheable):</strong> 
+              Каждый ответ сервера должен быть явно или неявно помечен как кэшируемый либо некэшируемый при помощи HTTP-заголовков (<code>Cache-Control</code>, <code>ETag</code>, <code>Expires</code>). Кэширование на стороне браузера или промежуточных прокси-серверов (CDN) уменьшает задержки сети и кардинально снижает нагрузку на базу данных.
+            </li>
+            <li>
+              <strong>Единый унифицированный интерфейс (Uniform Interface):</strong> 
+              Фундаментальный принцип, обеспечивающий простоту и предсказуемость API. Он строится на четырех подпунктах:
+              <ul>
+                <li><em>Идентификация ресурсов:</em> каждый ресурс адресуется собственным URI (например, <code>/api/v1/articles/42</code>);</li>
+                <li><em>Манипуляция ресурсами через представления:</em> клиент получает снимок данных (JSON/XML) и может модифицировать ресурс, отправляя обратно обновленное представление;</li>
+                <li><em>Самоописываемые сообщения:</em> каждый запрос и ответ содержат метаданные (MIME-тип <code>Content-Type</code>, кодировку), объясняющие, как интерпретировать данные;</li>
+                <li><em>HATEOAS (Hypermedia As The Engine Of Application State):</em> ответы сервера могут содержать гиперссылки на связанные действия и ресурсы, позволяя клиенту динамически исследовать API.</li>
+              </ul>
+            </li>
+            <li>
+              <strong>Многоуровневая система (Layered System):</strong> 
+              Архитектура системы может состоять из нескольких уровней: балансировщиков нагрузки, кэширующих серверов, шлюзов безопасности (API Gateway) и серверов баз данных. При этом клиент взаимодействует с шлюзом так, будто общается напрямую с конечным сервером, не зная деталей внутренней инфраструктуры.
+            </li>
+            <li>
+              <strong>Код по требованию (Code on Demand - опционально):</strong> 
+              Сервер может временно расширить возможности клиента, передавая исполняемый код (например, скрипты JavaScript для валидации на стороне клиента). Это единственное необязательное ограничение REST.
+            </li>
+          </ol>
+        </section>
+
+        <section>
+          <h2 id="section-3">Методы HTTP и их семантика в RESTful API</h2>
+          <p>
+            В RESTful сервисах действия над ресурсами выражаются не именами URL (например, не стоит делать <code>/getUser</code> или <code>/deleteUser</code>), а стандартными глаголами протокола HTTP. В таблице ниже представлены основные методы, их свойства и практические примеры:
+          </p>
+
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Метод</th>
+                <th>Назначение</th>
+                <th>Свойства</th>
+                <th>Пример эндпоинта</th>
+                <th>Описание действия</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>GET</strong></td>
+                <td>Получение ресурса или коллекции ресурсов</td>
+                <td>Безопасный, Идемпотентный</td>
+                <td><code>GET /api/v1/users/15</code></td>
+                <td>Возвращает информацию о пользователе с ID 15. Не изменяет состояние сервера.</td>
+              </tr>
+              <tr>
+                <td><strong>POST</strong></td>
+                <td>Создание нового подчиненного ресурса</td>
+                <td>Небезопасный, Неидемпотентный</td>
+                <td><code>POST /api/v1/users</code></td>
+                <td>Создает нового пользователя на основе переданного тела запроса. Возвращает статус <code>201 Created</code>.</td>
+              </tr>
+              <tr>
+                <td><strong>PUT</strong></td>
+                <td>Полная замена существующего ресурса</td>
+                <td>Небезопасный, Идемпотентный</td>
+                <td><code>PUT /api/v1/users/15</code></td>
+                <td>Полностью перезаписывает данные пользователя 15 новыми значениями всех полей объекта.</td>
+              </tr>
+              <tr>
+                <td><strong>PATCH</strong></td>
+                <td>Частичное изменение полей ресурса</td>
+                <td>Небезопасный, Неидемпотентный*</td>
+                <td><code>PATCH /api/v1/users/15</code></td>
+                <td>Обновляет только указанные поля (например, смену адреса email или статуса активности).</td>
+              </tr>
+              <tr>
+                <td><strong>DELETE</strong></td>
+                <td>Удаление указанного ресурса</td>
+                <td>Небезопасный, Идемпотентный</td>
+                <td><code>DELETE /api/v1/users/15</code></td>
+                <td>Удаляет запись о пользователе с ID 15 из базы данных. Повторный вызов возвращает <code>404 Not Found</code> или <code>204 No Content</code>.</td>
+              </tr>
+            </tbody>
+          </table>
+          <p>
+            <em>Примечание:</em> Метод считается <strong>безопасным</strong>, если его выполнение не приводит к изменению состояния на сервере. Метод считается <strong>идемпотентным</strong>, если повторные одинаковые запросы дают точно такой же результат, как и однократный запрос.
+          </p>
+        </section>
+
+        <section>
+          <h2 id="section-4">Пример взаимодействия: REST-запрос и ответ сервера</h2>
+          <p>
+            Рассмотрим практический сценарий создания новой статьи в блоге через REST API. Клиент отправляет POST-запрос с полезной нагрузкой в формате JSON, передавая токен авторизации в заголовке <code>Authorization</code>:
+          </p>
+
+          <h3>1. HTTP-запрос от клиента (Request)</h3>
+          <pre class="code-block"><code>POST /api/v1/articles HTTP/1.1
+Host: api.example.com
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+Content-Type: application/json; charset=utf-8
+Accept: application/json
+
+{
+  "title": "Архитектурные принципы REST API в веб-разработке",
+  "category": "backend",
+  "tags": ["rest", "api", "http", "architecture"],
+  "published": true,
+  "summary": "Подробный разбор принципов REST, методов HTTP и лучших практик проектирования интерфейсов."
+}</code></pre>
+
+          <h3>2. Ответ сервера (Response)</h3>
+          <p>
+            Сервер валидирует данные, сохраняет запись в базе данных и возвращает код ответа <code>201 Created</code> вместе с заголовком <code>Location</code>, указывающим путь к созданному ресурсу, и сформированным объектом в теле ответа:
+          </p>
+          <pre class="code-block"><code>HTTP/1.1 201 Created
+Date: Sat, 26 Sep 2026 19:55:00 GMT
+Content-Type: application/json; charset=utf-8
+Location: https://api.example.com/api/v1/articles/108
+ETag: W/"5d2a-89f41b0e"
+
+{
+  "status": "success",
+  "data": {
+    "id": 108,
+    "title": "Архитектурные принципы REST API в веб-разработке",
+    "category": "backend",
+    "tags": ["rest", "api", "http", "architecture"],
+    "published": true,
+    "summary": "Подробный разбор принципов REST, методов HTTP и лучших практик проектирования интерфейсов.",
+    "createdAt": "2026-09-26T19:55:00.124Z",
+    "authorId": 42
+  },
+  "_links": {
+    "self": { "href": "/api/v1/articles/108" },
+    "author": { "href": "/api/v1/users/42" },
+    "comments": { "href": "/api/v1/articles/108/comments" }
+  }
+}</code></pre>
+        </section>
+
+        <section>
+          <h2 id="section-5">Рекомендации по проектированию чистого REST API</h2>
+          <p>
+            Грамотно спроектированный API интуитивно понятен разработчикам и прост в интеграции. Профессиональные команды придерживаются следующих правил:
+          </p>
+          <ul>
+            <li><strong>Существительные во множественном числе для именования сущностей:</strong> используйте <code>/users</code>, <code>/orders</code>, <code>/products</code> вместо глаголов в пути URL.</li>
+            <li><strong>Иерархия для вложенных ресурсов:</strong> для получения комментариев конкретной статьи используйте путь <code>/articles/108/comments</code>.</li>
+            <li><strong>Фильтрация, сортировка и пагинация через query-параметры:</strong> параметры запроса передаются через знак вопроса, например: <code>/articles?category=backend&amp;sort=-createdAt&amp;page=1&amp;limit=10</code>.</li>
+            <li><strong>Корректное использование статус-кодов HTTP:</strong> группа <code>2xx</code> (успех), <code>4xx</code> (ошибки клиента, такие как <code>400 Bad Request</code> или <code>401 Unauthorized</code>), <code>5xx</code> (внутренние сбои сервера).</li>
+            <li><strong>Версионирование API:</strong> обязательно указывайте версию интерфейса в пути URL (например, <code>/api/v1/</code>), чтобы будущие изменения не ломали работу существующих клиентских приложений.</li>
+          </ul>
+        </section>
+      </main>
+
+      <aside class="page-layout__sidebar sidebar">
+<div class="sidebar__section">
+  <h3 class="sidebar__title">Оглавление</h3>
+  <ul class="sidebar__nav toc-list">
+    <li><a href="#section-1">Что такое REST и почему он стал стандартом?</a></li>
+<li><a href="#section-2">Ключевые принципы архитектуры REST</a></li>
+<li><a href="#section-3">Методы HTTP и их семантика в RESTful API</a></li>
+<li><a href="#section-4">Пример взаимодействия: REST-запрос и ответ сервера</a></li>
+<li><a href="#section-5">Рекомендации по проектированию чистого REST API</a></li>
+
+  </ul>
+</div>
+        
+        <div class="sidebar__section">
+          <h3 class="sidebar__title">Подписывайся, чтоб узнавать больше!</h3>
+          <form class="sidebar__form" action="mailto:sevrukmv5@mail.ru" method="post" enctype="text/plain">
+            <label class="field">
+              <input type="email" placeholder="Email" required>
+              <span class="label">Ваш email</span>
+            </label>
+            <button type="submit" class="button -block">Подписаться</button>
+          </form>
+        </div>
+        <div class="sidebar__section sidebar__banner">
+          <p class="sidebar__banner-text">📚 Изучайте API - стройте современные веб-приложения!</p>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="wrapper -wide">
+      <div class="grid -medium" style="--columns: 3;">
+        <div>
+          <h4>О проекте</h4>
+          <p>Учебный сайт по теме «Использование API сервисов при разработке сайтов».</p>
+        </div>
+        <div>
+            <h4>Контакты</h4>
+            <p>Студент: Севрук Михаил Витальевич</p>
+            <p>Группа: 835</p>
+            <ul>
+              <li><a href="mailto:sevrukmv5@mail.ru">Email: sevrukmv5@mail.ru</a></li>
+              <li><a href="https://t.me/ushastx" target="_blank" rel="noopener noreferrer">Telegram: @ushastx</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4>Ссылки</h4>
+            <ul>
+              <li><a href="https://rutube.ru/video/6e904a4975bc0950c8ee03e0f5c21617/" target="_blank" rel="noopener noreferrer">Видео</a></li>
+              <li><a href="https://github.com/ushastx" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+            </ul>
+          </div>
+      <p class="ta-center site-footer__copy">© 2026 Севрук Михаил Витальевич. Все права защищены.</p>
+    </div>
+  </footer>
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Форматы обмена данными: JSON и XML - API в веб-разработке</title>
+  <link rel="stylesheet" href="https://unpkg.com/cutestrap@8.0.2/dist/css/cutestrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/jpeg" href="img/favicon.jpg">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrapper -wide">
+      <div class="site-header__inner">
+        <a href="index.html" class="site-header__logo">🔗 API Guide</a>
+        <button class="site-header__burger" aria-label="Открыть меню" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+        <nav class="site-nav" id="main-nav">
+          <ul class="site-nav__list">
+            <li><a href="index.html" class="site-nav__link">Главная</a></li>
+            <li><a href="what-is-api.html" class="site-nav__link">Что такое API</a></li>
+            <li><a href="rest-api.html" class="site-nav__link">REST API</a></li>
+            <li><a href="formats.html" class="site-nav__link site-nav__link--active">JSON и XML</a></li>
+            <li><a href="popular-api.html" class="site-nav__link">Популярные API</a></li>
+            <li><a href="practice.html" class="site-nav__link">Практика</a></li>
+            <li><a href="security.html" class="site-nav__link">Безопасность</a></li>
+            <li><a href="contacts.html" class="site-nav__link">Контакты</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrapper -wide">
+    <div class="page-layout">
+      <main class="page-layout__main">
+        <h1>Форматы обмена данными: JSON и XML</h1>
+
+        <section>
+          <h2 id="section-1">Роль форматов сериализации в веб-разработке</h2>
+          <p>
+            В современной веб-разработке серверная и клиентская части приложения чаще всего создаются на совершенно разных языках программирования и работают на независимых платформах. Например, серверный бэкенд может функционировать на Node.js, Go, Python или Java, тогда как клиентом выступает браузер с JavaScript или мобильное приложение на Swift и Kotlin. Чтобы эти гетерогенные системы могли беспрепятственно обмениваться объектами, массивами и структурами данных, требуется общий, платформонезависимый язык сериализации.
+          </p>
+          <p>
+            Исторически двумя ключевыми форматами текстового обмена сообщениями в сети стали <strong>XML (eXtensible Markup Language)</strong> и <strong>JSON (JavaScript Object Notation)</strong>. На заре развития веб-сервисов в 1990-х и начале 2000-х годов безусловным лидером был XML, являвшийся основой стека SOAP и корпоративных информационных систем. Однако с развитием концепции Web 2.0, архитектурного стиля REST и одностраничных веб-приложений (SPA) формат JSON вытеснил XML и стал отраслевым стандартом для веб-API.
+          </p>
+        </section>
+
+        <section>
+          <h2 id="section-2">Формат JSON: простота, скорость и лаконичность</h2>
+          <p>
+            <strong>JSON (JavaScript Object Notation)</strong> - текстовый формат обмена данными, базирующийся на подмножестве синтаксиса определения объектов в JavaScript (стандарт ECMA-262), но полностью независимый от какого-либо языка. Он был популяризирован в начале 2000-х годов Дугласом Крокфордом (Douglas Crockford) как легкая и понятная человеку альтернатива громоздким форматам на основе тегов.
+          </p>
+          <p>
+            Структура JSON строится всего на двух универсальных конструкциях:
+          </p>
+          <ul>
+            <li><strong>Коллекция пар «ключ - значение»:</strong> в разных языках это реализуется как объект, словарь (dictionary), ассоциативный массив или хэш-таблица. Ключ всегда является строкой в двойных кавычках.</li>
+            <li><strong>Упорядоченный список значений:</strong> список или массив элементов (array), обрамляемый квадратными скобками <code>[]</code>.</li>
+          </ul>
+          <p>
+            JSON изначально поддерживает типизацию на базовом уровне: строки (string), числа (числа с плавающей точкой и целые), логические константы (<code>true</code>, <code>false</code>), значение <code>null</code>, а также вложенные объекты и массивы. Благодаря этому парсинг в браузере осуществляется нативно и мгновенно с помощью встроенного метода <code>JSON.parse()</code>, а обратная сериализация - через <code>JSON.stringify()</code>.
+          </p>
+
+          <h3>Пример данных в формате JSON</h3>
+          <p>Ниже представлен пример описания карточки товара в интернет-магазине:</p>
+          <pre class="code-block"><code>{
+  "id": 4092,
+  "sku": "KB-MECH-RGB-01",
+  "title": "Механическая клавиатура HyperPro 87",
+  "inStock": true,
+  "price": {
+    "amount": 7990.50,
+    "currency": "RUB",
+    "discountPercent": 15
+  },
+  "categories": ["Периферия", "Клавиатуры", "Гейминг"],
+  "specifications": {
+    "switchType": "Red Linear",
+    "connection": "USB Type-C",
+    "backlight": "RGB per-key",
+    "weightGrams": 850
+  },
+  "rating": 4.85,
+  "reviewsCount": 42
+}</code></pre>
+        </section>
+
+        <section>
+          <h2 id="section-3">Формат XML: расширяемость и строгая стандартизация</h2>
+          <p>
+            <strong>XML (eXtensible Markup Language - «расширяемый язык разметки»)</strong> - рекомендация консорциума W3C, созданная для описания и структурирования данных посредством иерархических тегов. В отличие от HTML, где набор тегов жестко фиксирован и служит для отображения внешнего вида элементов в браузере, в XML разработчик сам создает необходимые теги, отражающие семантику передаваемой информации.
+          </p>
+          <p>
+            Сильная сторона XML заключается в его колоссальной экосистеме сопутствующих технологий:
+          </p>
+          <ul>
+            <li><strong>XML Schema (XSD) и DTD:</strong> мощнейшие средства описания структуры и строгой валидации типов данных, позволяющие проверять корректность входящих файлов еще до того, как они попадут в бизнес-логику приложения;</li>
+            <li><strong>Пространства имен (Namespaces):</strong> атрибут <code>xmlns</code> предотвращает конфликты имен элементов при объединении документов различных стандартов в один XML-пакет;</li>
+            <li><strong>XPath и XQuery:</strong> стандартизированные языки запросов для выборки и фильтрации узлов в сложных древовидных XML-структурах;</li>
+            <li><strong>XSLT (Extensible Stylesheet Language Transformations):</strong> функциональный язык декларативного преобразования документов из формата XML в HTML, PDF или другие форматы данных.</li>
+          </ul>
+
+          <h3>Пример тех же данных в формате XML</h3>
+          <p>Аналогичная карточка товара, описанная на языке XML с использованием вложенных тегов и атрибутов:</p>
+          <pre class="code-block"><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;product id="4092" sku="KB-MECH-RGB-01" inStock="true"&gt;
+  &lt;title&gt;Механическая клавиатура HyperPro 87&lt;/title&gt;
+  &lt;price currency="RUB" discountPercent="15"&gt;7990.50&lt;/price&gt;
+  &lt;categories&gt;
+    &lt;category&gt;Периферия&lt;/category&gt;
+    &lt;category&gt;Клавиатуры&lt;/category&gt;
+    &lt;category&gt;Гейминг&lt;/category&gt;
+  &lt;/categories&gt;
+  &lt;specifications&gt;
+    &lt;spec name="switchType"&gt;Red Linear&lt;/spec&gt;
+    &lt;spec name="connection"&gt;USB Type-C&lt;/spec&gt;
+    &lt;spec name="backlight"&gt;RGB per-key&lt;/spec&gt;
+    &lt;spec name="weightGrams"&gt;850&lt;/spec&gt;
+  &lt;/specifications&gt;
+  &lt;rating&gt;4.85&lt;/rating&gt;
+  &lt;reviewsCount&gt;42&lt;/reviewsCount&gt;
+&lt;/product&gt;</code></pre>
+        </section>
+
+        <section>
+          <h2 id="section-4">Сравнительный анализ: JSON против XML</h2>
+          <p>
+            Оба формата отлично справляются с задачей иерархического представления данных, однако обладают принципиально разными инженерными характеристиками, ресурсоемкостью и сферами применения:
+          </p>
+
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Критерий сравнения</th>
+                <th>JSON (JavaScript Object Notation)</th>
+                <th>XML (eXtensible Markup Language)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Читаемость</strong></td>
+                <td>
+                  Очень высокая. Лаконичный синтаксис на основе фигурных и квадратных скобок, интуитивно понятен разработчикам и удобен для восприятия человеком.
+                </td>
+                <td>
+                  Средняя. Большое количество открывающих и закрывающих тегов создает визуальный шум и затрудняет быстрое чтение человеком больших структур.
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Размер данных</strong></td>
+                <td>
+                  Минимальный. Отсутствие избыточных закрывающих тегов обеспечивает компактный размер полезной нагрузки и экономию интернет-трафика.
+                </td>
+                <td>
+                  Значительный. Повторяющиеся имена тегов и служебные атрибуты увеличивают объем передаваемого файла в среднем на 30-50% по сравнению с JSON.
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Поддержка типов</strong></td>
+                <td>
+                  Встроенная базовая типизация: строки, числа, логический тип (булево), массивы, объекты и null.
+                </td>
+                <td>
+                  Все значения по умолчанию являются текстом. Строгая типизация возможна только при подключении внешней схемы валидации XSD (XML Schema).
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Использование в API</strong></td>
+                <td>
+                  Абсолютный лидер в современных веб-технологиях: REST API, GraphQL, WebSockets, микросервисы, мобильные клиенты и базы данных NoSQL.
+                </td>
+                <td>
+                  Применяется преимущественно в протоколах SOAP/WSDL, корпоративных шинах данных (ESB), банковских шлюзах и госсервисах.
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Схема валидации</strong></td>
+                <td>
+                  Поддерживается через стандарт <em>JSON Schema</em>, однако на практике валидация чаще выполняется на уровне моделей языка программирования (DTO).
+                </td>
+                <td>
+                  Чрезвычайно развитая и мощная система строгой формальной валидации на базе XSD (XML Schema Definition) и DTD на уровне парсера.
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Поддержка комментариев</strong></td>
+                <td>
+                  Не поддерживается официальной спецификацией RFC 8259 во избежание неоднозначностей при парсинге данных.
+                </td>
+                <td>
+                  Полная нативная поддержка комментариев с помощью стандартного синтаксиса <code>&lt;!-- комментарий --&gt;</code>.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section>
+          <h2 id="section-5">Выводы: когда и какой формат использовать?</h2>
+          <p>
+            Выбор между JSON и XML определяется архитектурными требованиями проекта, целевой аудиторией сервиса и необходимостью интеграции со сторонними платформами:
+          </p>
+          <p>
+            <strong>Выбирайте JSON, если:</strong>
+          </p>
+          <ul>
+            <li>Вы разрабатываете современное клиент-серверное веб-приложение (SPA на React, Vue, Angular) или мобильное приложение;</li>
+            <li>Вы создаете публичный или внутренний RESTful API;</li>
+            <li>Критична скорость парсинга, низкое потребление памяти и минимальная задержка при передаче пакетов по сети;</li>
+            <li>Хранилищем данных выступает документоориентированная СУБД (например, MongoDB, CouchDB или PostgreSQL с полями типа JSONB).</li>
+          </ul>
+          <p>
+            <strong>Выбирайте XML, если:</strong>
+          </p>
+          <ul>
+            <li>Требуется интеграция с унаследованными (legacy) корпоративными системами, банковскими шлюзами или государственными реестрами, работающими по протоколу SOAP;</li>
+            <li>Обязательна жесткая валидация структуры и форматов сложных документов по контрактам XSD до передачи данных в вычислительный контур;</li>
+            <li>Формат используется для разметки документов смешанного типа (где текст перемежается тегами форматирования), создания офисных файлов (OpenXML, DOCX, XLSX) или векторной графики (SVG);</li>
+            <li>Необходима трансляция данных между различными форматами на лету с использованием механизмов XSLT.</li>
+          </ul>
+        </section>
+      </main>
+
+      <aside class="page-layout__sidebar sidebar">
+<div class="sidebar__section">
+  <h3 class="sidebar__title">Оглавление</h3>
+  <ul class="sidebar__nav toc-list">
+    <li><a href="#section-1">Роль форматов сериализации в веб-разработке</a></li>
+<li><a href="#section-2">Формат JSON: простота, скорость и лаконичность</a></li>
+<li><a href="#section-3">Формат XML: расширяемость и строгая стандартизация</a></li>
+<li><a href="#section-4">Сравнительный анализ: JSON против XML</a></li>
+<li><a href="#section-5">Выводы: когда и какой формат использовать?</a></li>
+
+  </ul>
+</div>
+        
+        <div class="sidebar__section">
+          <h3 class="sidebar__title">Подписывайся, чтоб узнавать больше!</h3>
+          <form class="sidebar__form" action="mailto:sevrukmv5@mail.ru" method="post" enctype="text/plain">
+            <label class="field">
+              <input type="email" placeholder="Email" required>
+              <span class="label">Ваш email</span>
+            </label>
+            <button type="submit" class="button -block">Подписаться</button>
+          </form>
+        </div>
+        <div class="sidebar__section sidebar__banner">
+          <p class="sidebar__banner-text">📚 Изучайте API - стройте современные веб-приложения!</p>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="wrapper -wide">
+      <div class="grid -medium" style="--columns: 3;">
+        <div>
+          <h4>О проекте</h4>
+          <p>Учебный сайт по теме «Использование API сервисов при разработке сайтов».</p>
+        </div>
+        <div>
+            <h4>Контакты</h4>
+            <p>Студент: Севрук Михаил Витальевич</p>
+            <p>Группа: 835</p>
+            <ul>
+              <li><a href="mailto:sevrukmv5@mail.ru">Email: sevrukmv5@mail.ru</a></li>
+              <li><a href="https://t.me/ushastx" target="_blank" rel="noopener noreferrer">Telegram: @ushastx</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4>Ссылки</h4>
+            <ul>
+              <li><a href="https://rutube.ru/video/6e904a4975bc0950c8ee03e0f5c21617/" target="_blank" rel="noopener noreferrer">Видео</a></li>
+              <li><a href="https://github.com/ushastx" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+            </ul>
+          </div>
+      <p class="ta-center site-footer__copy">© 2026 Севрук Михаил Витальевич. Все права защищены.</p>
+    </div>
+  </footer>
+  <script src="js/main.js"></script>
+</body>
+</html>

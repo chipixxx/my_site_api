@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Контакты и обратная связь - API в веб-разработке</title>
+  <link rel="stylesheet" href="https://unpkg.com/cutestrap@8.0.2/dist/css/cutestrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/jpeg" href="img/favicon.jpg">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrapper -wide">
+      <div class="site-header__inner">
+        <a href="index.html" class="site-header__logo">🔗 API Guide</a>
+        <button class="site-header__burger" aria-label="Открыть меню" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+        <nav class="site-nav" id="main-nav">
+          <ul class="site-nav__list">
+            <li><a href="index.html" class="site-nav__link">Главная</a></li>
+            <li><a href="what-is-api.html" class="site-nav__link">Что такое API</a></li>
+            <li><a href="rest-api.html" class="site-nav__link">REST API</a></li>
+            <li><a href="formats.html" class="site-nav__link">JSON и XML</a></li>
+            <li><a href="popular-api.html" class="site-nav__link">Популярные API</a></li>
+            <li><a href="practice.html" class="site-nav__link">Практика</a></li>
+            <li><a href="security.html" class="site-nav__link">Безопасность</a></li>
+            <li><a href="contacts.html" class="site-nav__link site-nav__link--active">Контакты</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrapper -wide">
+    <div class="page-layout">
+      <main class="page-layout__main">
+        <h1>Контакты и обратная связь</h1>
+
+        <p>Добро пожаловать в раздел обратной связи образовательного портала, посвящённого практическому использованию программных интерфейсов (API) в современной веб-разработке. Мы ценим конструктивное взаимодействие с учащимися, преподавателями и практикующими разработчиками, которые применяют материалы сайта в своей учёбе и коммерческих проектах.</p>
+
+        <p>Если в процессе освоения теоретических концепций REST API, изучения синтаксиса форматов JSON и XML или настройки механизмов аутентификации у вас возникли вопросы, вы всегда можете направить свой запрос через приведённую ниже форму. Наша команда старается подробно разбирать сложные сценарии интеграции сервисов и делиться лучшими архитектурными практиками.</p>
+
+        <p>Мы также активно принимаем отзывы о содержании портала, конструктивные предложения по дополнению практических заданий и сообщения о возможных опечатках в примерах кода или устаревших ссылках на сторонние сервисы. Постоянное улучшение качества учебных материалов помогает создавать актуальное и полезное руководство для начинающих фронтенд- и бэкенд-инженеров.</p>
+
+        <p>Для отправки обращения заполните обязательные поля формы. Укажите подходящий канал для обратной связи - электронную почту или мессенджер Telegram, чтобы мы могли оперативно направить развёрнутый ответ. Все входящие сообщения рассматриваются в индивидуальном порядке в течение 1-2 рабочих дней.</p>
+
+        <p>Данный ресурс создан в рамках университетского курса по веб-технологиям и демонстрирует принципы модульной компонентной вёрстки по методологии БЭМ, адаптивного проектирования методом Desktop-First и интеграции внешних RESTful API сервисов.</p>
+
+        <section style="margin-top: 2rem;">
+          <h2 id="section-1">Форма обратной связи</h2>
+          <form class="contact-form" action="mailto:sevrukmv5@mail.ru" method="post" enctype="text/plain">
+            <div class="contact-form__group">
+              <label class="field">
+                <input type="text" name="name" placeholder="Введите ваше имя" required>
+                <span class="label">Имя</span>
+              </label>
+            </div>
+
+            <div class="contact-form__group">
+              <label class="field">
+                <input type="email" name="email" placeholder="name@example.com" required>
+                <span class="label">Email</span>
+              </label>
+            </div>
+
+            <div class="contact-form__group">
+              <label class="field">
+                <select name="subject" required>
+                  <option value="" disabled selected>Выберите тему</option>
+                  <option value="Вопрос по API">Вопрос по API</option>
+                  <option value="Предложение">Предложение</option>
+                  <option value="Ошибка на сайте">Ошибка на сайте</option>
+                  <option value="Другое">Другое</option>
+                </select>
+                <span class="label">Тема</span>
+              </label>
+            </div>
+
+            <div class="contact-form__group">
+              <label class="field">
+                <textarea name="message" rows="5" placeholder="Опишите подробно ваш вопрос или предложение..." required></textarea>
+                <span class="label">Сообщение</span>
+              </label>
+            </div>
+
+            <fieldset class="contact-form__group" style="border: 1px solid var(--color-border); border-radius: 6px; padding: 1rem; margin-top: 1rem; margin-bottom: 1rem;">
+              <legend style="padding: 0 0.5rem; font-weight: 600; color: var(--color-primary);">Предпочтительный способ связи</legend>
+              <label style="display: inline-flex; align-items: center; gap: 0.5rem; margin-right: 1.5rem; cursor: pointer;">
+                <input type="radio" name="preferred_contact" value="Email" checked>
+                <span>Email</span>
+              </label>
+              <label style="display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                <input type="radio" name="preferred_contact" value="Telegram">
+                <span>Telegram</span>
+              </label>
+            </fieldset>
+
+            <div class="contact-form__group" style="margin-bottom: 1.5rem;">
+              <label style="display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                <input type="checkbox" name="agreement" required>
+                <span>Я согласен(на) на обработку персональных данных</span>
+              </label>
+            </div>
+
+            <button type="submit" class="button">Отправить сообщение</button>
+          </form>
+        </section>
+
+        <section class="contact-info" style="margin-top: 2.5rem; padding: 1.5rem; background: var(--color-sidebar-bg); border: 1px solid var(--color-border); border-radius: 8px;">
+          <h2 id="section-2" style="margin-top: 0; color: var(--color-primary);">Контактная информация автора</h2>
+          <p><strong>Студент:</strong> Севрук Михаил Витальевич</p>
+          <p><strong>Группа:</strong> 835</p>
+          <p><strong>Тема проекта:</strong> Использование API сервисов при разработке сайтов</p>
+          <p><strong>Email для корреспонденции:</strong> <a href="mailto:mikhail.sevruk@example.com">mikhail.sevruk@example.com</a></p>
+          <p><strong>Время для консультаций:</strong> Понедельник - Пятница, 10:00 - 18:00 (МСК)</p>
+        </section>
+
+        <div class="page-navigation" style="margin-top: 2rem;">
+          <a href="index.html" style="text-decoration: none; display: inline-block;">
+            <button type="button" class="button -secondary" onclick="window.location.href='index.html'">Вернуться на главную</button>
+          </a>
+        </div>
+      </main>
+
+      <aside class="page-layout__sidebar sidebar">
+<div class="sidebar__section">
+  <h3 class="sidebar__title">Оглавление</h3>
+  <ul class="sidebar__nav toc-list">
+    <li><a href="#section-1">Форма обратной связи</a></li>
+
+  </ul>
+</div>
+        
+        <div class="sidebar__section">
+          <h3 class="sidebar__title">Подписывайся, чтоб узнавать больше!</h3>
+          <form class="sidebar__form" action="mailto:sevrukmv5@mail.ru" method="post" enctype="text/plain">
+            <label class="field">
+              <input type="email" placeholder="Email" required>
+              <span class="label">Ваш email</span>
+            </label>
+            <button type="submit" class="button -block">Подписаться</button>
+          </form>
+        </div>
+        <div class="sidebar__section sidebar__banner">
+          <p class="sidebar__banner-text">📚 Изучайте API - стройте современные веб-приложения!</p>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="wrapper -wide">
+      <div class="grid -medium" style="--columns: 3;">
+        <div>
+          <h4>О проекте</h4>
+          <p>Учебный сайт по теме «Использование API сервисов при разработке сайтов».</p>
+        </div>
+        <div>
+            <h4>Контакты</h4>
+            <p>Студент: Севрук Михаил Витальевич</p>
+            <p>Группа: 835</p>
+            <ul>
+              <li><a href="mailto:sevrukmv5@mail.ru">Email: sevrukmv5@mail.ru</a></li>
+              <li><a href="https://t.me/ushastx" target="_blank" rel="noopener noreferrer">Telegram: @ushastx</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4>Ссылки</h4>
+            <ul>
+              <li><a href="https://rutube.ru/video/6e904a4975bc0950c8ee03e0f5c21617/" target="_blank" rel="noopener noreferrer">Видео</a></li>
+              <li><a href="https://github.com/ushastx" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+            </ul>
+          </div>
+      <p class="ta-center site-footer__copy">© 2026 Севрук Михаил Витальевич. Все права защищены.</p>
+    </div>
+  </footer>
+  <script src="js/main.js"></script>
+</body>
+</html>

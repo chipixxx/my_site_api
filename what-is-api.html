@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Что такое API - API в веб-разработке</title>
+  <link rel="stylesheet" href="https://unpkg.com/cutestrap@8.0.2/dist/css/cutestrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/jpeg" href="img/favicon.jpg">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrapper -wide">
+      <div class="site-header__inner">
+        <a href="index.html" class="site-header__logo">🔗 API Guide</a>
+        <button class="site-header__burger" aria-label="Открыть меню" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+        <nav class="site-nav" id="main-nav">
+          <ul class="site-nav__list">
+            <li><a href="index.html" class="site-nav__link">Главная</a></li>
+            <li><a href="what-is-api.html" class="site-nav__link site-nav__link--active">Что такое API</a></li>
+            <li><a href="rest-api.html" class="site-nav__link">REST API</a></li>
+            <li><a href="formats.html" class="site-nav__link">JSON и XML</a></li>
+            <li><a href="popular-api.html" class="site-nav__link">Популярные API</a></li>
+            <li><a href="practice.html" class="site-nav__link">Практика</a></li>
+            <li><a href="security.html" class="site-nav__link">Безопасность</a></li>
+            <li><a href="contacts.html" class="site-nav__link">Контакты</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrapper -wide">
+    <div class="page-layout">
+      <main class="page-layout__main">
+        <h1>Что такое API?</h1>
+
+        <section>
+          <h2 id="section-1">Понятие и сущность Application Programming Interface</h2>
+          <p><strong>API</strong> (аббревиатура от англ. <em>Application Programming Interface</em> - интерфейс прикладного программирования) представляет собой формализованный набор правил, протоколов, спецификаций и программных структур, с помощью которых различные приложения и сервисы взаимодействуют друг с другом. API выполняет роль универсального посредника или переводчика: одна система запрашивает конкретные данные или действия, а вторая система обрабатывает запрос и возвращает результат в строго регламентированном формате, не раскрывая при этом детали своей внутренней реализации.</p>
+
+          <p>Для лучшего понимания концепции API часто приводят аналогию с вендинговым аппаратом. Пользователь (клиент) подходит к автомату, вводит номер товара (например, «A5») и вносит оплату (API-запрос с параметрами). Внутренний механизм автомата (сам API) проверяет корректность ввода, обращается к складу внутри аппарата (базе данных), забирает нужный снек и выдает его (API-ответ). Пользователю не нужно знать, как устроены шестеренки, датчики и провода внутри — он просто использует готовый интерфейс с кнопками. Точно так же веб-разработчик использует API внешнего сервиса, не вникая во внутренние алгоритмы сервера.</p>
+
+          <p>В контексте современной веб-разработки под термином API почти всегда понимают <strong>Web API</strong> - сетевые сервисы, доступные по протоколу HTTP/HTTPS. Клиентское веб-приложение (выполняемое в браузере пользователя на JavaScript) формирует сетевой запрос к удаленному серверу, передавая параметры запроса в URL или теле сообщения, а сервер возвращает ответ, как правило, в формате JSON. Это позволяет полностью отделить визуальное представление интерфейса (фронтенд) от хранения и обработки бизнес-логики (бэкенд).</p>
+        </section>
+
+        <section>
+          <h2 id="section-2">Схема взаимодействия Client - API - Server</h2>
+          <p>Сетевой обмен через API основан на базовом паттерне «запрос-ответ» (Request-Response). Ниже представлена наглядная диаграмма взаимодействия компонентов в типичном веб-приложении:</p>
+
+          <div class="schema-container" style="position: relative; width: 100%; max-width: 800px; margin: 2rem auto; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border: 1px solid var(--color-border); background: #e6f0f9;">
+  <!-- Возвращаем aspect-ratio, так как саму картинку мы не обрезали аппаратно -->
+  <img src="img/api_schema_v2.png" alt="Схема взаимодействия Client -&gt; API -&gt; Server" style="width: 100%; aspect-ratio: 21/9; object-fit: cover; object-position: center; display: block;">
+  
+  <!-- CSS-оверлеи с текстом этапов -->
+  <div style="position: absolute; top: 12%; left: 35%; transform: translateX(-50%); font-weight: 700; font-size: 0.95rem; color: var(--color-primary-dark); background: rgba(255,255,255,0.9); padding: 4px 12px; border-radius: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">1. Запрос</div>
+  
+  <div style="position: absolute; bottom: 12%; left: 35%; transform: translateX(-50%); font-weight: 700; font-size: 0.95rem; color: var(--color-primary-dark); background: rgba(255,255,255,0.9); padding: 4px 12px; border-radius: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">4. Ответ</div>
+  
+  <div style="position: absolute; top: 12%; right: 30%; transform: translateX(50%); font-weight: 700; font-size: 0.95rem; color: var(--color-primary-dark); background: rgba(255,255,255,0.9); padding: 4px 12px; border-radius: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">2. Маршрутизация</div>
+  
+  <div style="position: absolute; bottom: 12%; right: 30%; transform: translateX(50%); font-weight: 700; font-size: 0.95rem; color: var(--color-primary-dark); background: rgba(255,255,255,0.9); padding: 4px 12px; border-radius: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">3. Логика</div>
+</div>
+<h3 style="text-align: center; margin-top: 2.5rem; margin-bottom: 1.5rem;">Этапы взаимодействия</h3>
+<div class="cards" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 0;">
+  <div class="card" style="padding: 1.5rem; text-align: left;">
+    <h4 class="card__title" style="margin-bottom: 0.5rem; font-size: 1.1rem; color: var(--color-text);">1. Запрос (Request)</h4>
+    <p class="card__text" style="text-indent: 0; margin-bottom: 0;">Клиентское приложение формирует HTTP-запрос (GET, POST, PUT, DELETE) и отправляет его к API, передавая необходимые данные.</p>
+  </div>
+  <div class="card" style="padding: 1.5rem; text-align: left;">
+    <h4 class="card__title" style="margin-bottom: 0.5rem; font-size: 1.1rem; color: var(--color-text);">2. Маршрутизация</h4>
+    <p class="card__text" style="text-indent: 0; margin-bottom: 0;">Сервер принимает запрос, проверяет права доступа и маршрутизирует его к соответствующему обработчику REST API.</p>
+  </div>
+  <div class="card" style="padding: 1.5rem; text-align: left;">
+    <h4 class="card__title" style="margin-bottom: 0.5rem; font-size: 1.1rem; color: var(--color-text);">3. Выполнение логики</h4>
+    <p class="card__text" style="text-indent: 0; margin-bottom: 0;">API обращается к базе данных (Database) или другим микросервисам для извлечения, сохранения или модификации информации.</p>
+  </div>
+  <div class="card" style="padding: 1.5rem; text-align: left;">
+    <h4 class="card__title" style="margin-bottom: 0.5rem; font-size: 1.1rem; color: var(--color-text);">4. Ответ (Response)</h4>
+    <p class="card__text" style="text-indent: 0; margin-bottom: 0;">API формирует ответ в формате JSON или XML и возвращает его клиенту вместе с HTTP статус-кодом (например, 200 OK).</p>
+  </div>
+</div>
+        </section>
+
+        <section>
+          <h2 id="section-3">История возникновения и эволюция API</h2>
+          <p>Концепция интерфейсов программирования зародилась задолго до появления Всемирной паутины. Еще в 1960-1970-х годах в эпоху мейнфреймов и первых операционных систем возникла необходимость в системных библиотеках и соглашениях о вызовах, позволявших программам безопасно взаимодействовать с ядром ОС и аппаратным обеспечением без прямого доступа к регистрам процессора и физической памяти.</p>
+
+          <p>В 1990-х годах с бурным ростом корпоративных компьютерных сетей появились технологии удаленного вызова процедур (RPC - Remote Procedure Call), а также архитектурные стандарты CORBA и Microsoft DCOM. С развитием интернета возник протокол SOAP (Simple Object Access Protocol), базирующийся на формате XML и строгих схемах WSDL. Хотя SOAP решил задачу межплатформенной интеграции в корпоративном секторе, он оказался избыточно сложным и «тяжеловесным» для динамичного веба.</p>
+
+          <p>Настоящая революция произошла в 2000 году, когда ученый Рой Филдинг (Roy Fielding), один из основных авторов спецификации протокола HTTP, представил свою докторскую диссертацию с описанием архитектурного стиля <strong>REST (Representational State Transfer)</strong>. Филдинг предложил использовать уже существующие возможности HTTP (URI для идентификации ресурсов, стандартные методы, заголовки и коды состояния) вместо нагромождения сложных надстроек. В 2000-х годах такие компании, как Salesforce, eBay, Amazon, Flickr и Twitter, открыли свои веб-API на базе REST и легкого формата JSON, дав мощный импульс эпохе Web 2.0. Сегодня API стали фундаментом облачных вычислений, бессерверной архитектуры (Serverless) и микросервисов.</p>
+        </section>
+
+        <section>
+          <h2 id="section-4">Классификация API по уровню доступности</h2>
+          <p>В зависимости от целевой аудитории, политики безопасности и бизнес-целей веб-API подразделяются на три основных класса:</p>
+
+          <div class="grid -medium" style="--columns: 3; margin: 1.5rem 0;">
+            <div class="sidebar__section" style="margin-bottom: 0;">
+              <h3>1. Публичные (Open / Public APIs)</h3>
+              <p>Открытые интерфейсы, доступные сторонним разработчикам с минимальными ограничениями или вовсе без них. Часто требуют бесплатной регистрации для получения API-ключа в целях учета трафика. Примеры: OpenWeatherMap, REST Countries, публичные данные государственных порталов.</p>
+            </div>
+
+            <div class="sidebar__section" style="margin-bottom: 0;">
+              <h3>2. Внутренние (Internal / Private APIs)</h3>
+              <p>Интерфейсы, предназначенные исключительно для использования внутри одной компании или инфраструктуры одного проекта. Закрыты от внешнего мира и обеспечивают связь между фронтендом и бэкендом, микросервисами или корпоративными базами данных.</p>
+            </div>
+
+            <div class="sidebar__section" style="margin-bottom: 0;">
+              <h3>3. Партнерские (Partner APIs)</h3>
+              <p>Интерфейсы, доступ к которым предоставляется по специальному соглашению конкретным бизнес-партнерам. Требуют строгой аутентификации, подписания соглашений об уровне сервиса (SLA). Примеры: интеграция интернет-магазина с банком-эквайером или логистической службой (СДЭК, Boxberry).</p>
+            </div>
+          </div>
+
+          <p>Также в современной архитектуре выделяют <em>композитные API (Composite APIs)</em>, которые позволяют клиенту одним запросом получить агрегированные данные сразу из нескольких связанных микросервисов, что существенно снижает сетевую нагрузку на мобильных устройствах.</p>
+        </section>
+
+        <section>
+          <h2 id="section-5">Ключевые преимущества использования API в веб-разработке</h2>
+          <p>Применение готовых API и проектирование собственных веб-сервисов дает разработчикам и бизнесу множество неоспоримых достоинств:</p>
+
+          <ol style="padding-left: 1.5rem; line-height: 1.7;">
+            <li><strong>Многократное ускорение разработки:</strong> отпадает необходимость создавать сложные модули с нуля; готовые картографические, платежные или авторизационные механизмы внедряются за считанные часы.</li>
+            <li><strong>Модульность и разделение ответственности:</strong> фронтенд-инженеры фокусируются на интерфейсе и пользовательском опыте (UI/UX), а бэкенд-разработчики - на надежности логики и оптимизации баз данных.</li>
+            <li><strong>Масштабируемость и гибкость:</strong> отдельные компоненты системы могут масштабироваться независимо в зависимости от нагрузки (например, выделенный микросервис поиска или генерации отчетов).</li>
+            <li><strong>Кроссплатформенная совместимость:</strong> один и тот же API может одновременно обслуживать веб-сайт, приложения для Android и iOS, смарт-часы и консольные утилиты.</li>
+            <li><strong>Высокий уровень безопасности:</strong> сервер базы данных и секретные алгоритмы скрыты за API-шлюзом; доступ строго контролируется через токены, роли и ограничения частоты запросов.</li>
+            <li><strong>Простота тестирования и сопровождения:</strong> каждый эндпоинт API можно изолированно протестировать автоматическими юнит- и интеграционными тестами (например, через Postman или Jest).</li>
+          </ol>
+        </section>
+      </main>
+      <aside class="page-layout__sidebar sidebar">
+<div class="sidebar__section">
+  <h3 class="sidebar__title">Оглавление</h3>
+  <ul class="sidebar__nav toc-list">
+    <li><a href="#section-1">Понятие и сущность Application Programming Interface</a></li>
+<li><a href="#section-2">Схема взаимодействия Client - API - Server</a></li>
+<li><a href="#section-3">История возникновения и эволюция API</a></li>
+<li><a href="#section-4">Классификация API по уровню доступности</a></li>
+<li><a href="#section-5">Ключевые преимущества использования API в веб-разработке</a></li>
+
+  </ul>
+</div>
+        
+        <div class="sidebar__section">
+          <h3 class="sidebar__title">Подписывайся, чтоб узнавать больше!</h3>
+          <form class="sidebar__form" action="mailto:sevrukmv5@mail.ru" method="post" enctype="text/plain">
+            <label class="field">
+              <input type="email" placeholder="Email" required>
+              <span class="label">Ваш email</span>
+            </label>
+            <button type="submit" class="button -block">Подписаться</button>
+          </form>
+        </div>
+        <div class="sidebar__section sidebar__banner">
+          <p class="sidebar__banner-text">📚 Изучайте API - стройте современные веб-приложения!</p>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="wrapper -wide">
+      <div class="grid -medium" style="--columns: 3;">
+        <div>
+          <h4>О проекте</h4>
+          <p>Учебный сайт по теме «Использование API сервисов при разработке сайтов».</p>
+        </div>
+        <div>
+            <h4>Контакты</h4>
+            <p>Студент: Севрук Михаил Витальевич</p>
+            <p>Группа: 835</p>
+            <ul>
+              <li><a href="mailto:sevrukmv5@mail.ru">Email: sevrukmv5@mail.ru</a></li>
+              <li><a href="https://t.me/ushastx" target="_blank" rel="noopener noreferrer">Telegram: @ushastx</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4>Ссылки</h4>
+            <ul>
+              <li><a href="https://rutube.ru/video/6e904a4975bc0950c8ee03e0f5c21617/" target="_blank" rel="noopener noreferrer">Видео</a></li>
+              <li><a href="https://github.com/ushastx" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+            </ul>
+          </div>
+      <p class="ta-center site-footer__copy">© 2026 Севрук Михаил Витальевич. Все права защищены.</p>
+    </div>
+  </footer>
+  <script src="js/main.js"></script>
+</body>
+</html>
