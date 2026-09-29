@@ -1,28 +1,23 @@
-﻿/* ===================================
-   Custom styles (BEM methodology)
-   Desktop-First: >=992px -> >=768px -> <768px
-   =================================== */
 
-/* Единый шрифт для всего сайта */
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
-  /* Новая пастельная палитра */
-  --color-bg: #FAF9F6;          /* Мягкий кремовый фон */
-  --color-surface: #FFFFFF;     /* Белый цвет для карточек, панелей и хедера */
-  --color-primary: #D4E2D4;     /* Пастельный шалфейный (акценты навигации, бейджи) */
-  --color-primary-dark: #B5C9B5;/* Темный шалфейный для состояний наведения */
-  --color-accent: #E5A9A9;      /* Пастельный коралловый (кнопки призыва к действию) */
-  --color-accent-hover: #D69797;/* Более насыщенный коралл для наведения */
-  --color-text: #2D3748;        /* Мягкий темно-серый (не абсолютно черный) для чтения */
-  --color-text-light: #718096;  /* Приглушенный серый для второстепенного текста */
-  --color-border: #E2E8F0;      /* Светлый нейтральный бордер */
+  
+  --color-bg: #FAF9F6;          
+  --color-surface: #FFFFFF;     
+  --color-primary: #D4E2D4;     
+  --color-primary-dark: #B5C9B5;
+  --color-accent: #E5A9A9;      
+  --color-accent-hover: #D69797;
+  --color-text: #2D3748;        
+  --color-text-light: #718096;  
+  --color-border: #E2E8F0;      
   --color-sidebar-bg: #FFFFFF;
   --color-white: #FFFFFF;
   --font-main: 'Inter', sans-serif;
 }
 
-/* Reset & base */
 *,
 *::before,
 *::after {
@@ -51,14 +46,13 @@ img {
   height: auto;
 }
 
-/* ===== SITE-HEADER ===== */
 .site-header {
   background: var(--color-surface);
   color: var(--color-text);
   position: sticky;
   top: 0;
   z-index: 100;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03); /* Невесомая тень вместо заливки */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03); 
   border-bottom: 1px solid var(--color-border);
 }
 
@@ -82,7 +76,6 @@ img {
   color: var(--color-accent);
 }
 
-/* Burger — hidden on desktop */
 .site-header__burger {
   display: none;
   flex-direction: column;
@@ -105,7 +98,6 @@ img {
   transition: transform 0.3s, opacity 0.3s;
 }
 
-/* Burger open state */
 .site-header__burger--open span:nth-child(1) {
   transform: translateY(8px) rotate(45deg);
 }
@@ -118,7 +110,6 @@ img {
   transform: translateY(-8px) rotate(-45deg);
 }
 
-/* ===== SITE-NAV ===== */
 .site-nav__list {
   display: flex;
   list-style: none;
@@ -144,7 +135,6 @@ img {
   color: var(--color-text);
 }
 
-/* ===== PAGE-LAYOUT (main + sidebar) ===== */
 .page-layout {
   display: grid;
   grid-template-columns: 1fr 300px;
@@ -153,10 +143,9 @@ img {
 }
 
 .page-layout__main {
-  min-width: 0; /* prevent overflow */
+  min-width: 0; 
 }
 
-/* ===== SIDEBAR ===== */
 .sidebar__section {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
@@ -197,7 +186,6 @@ img {
   color: var(--color-accent);
 }
 
-/* Subscription Form & Sidebar Inputs */
 .sidebar__section form {
   display: flex;
   flex-direction: column;
@@ -253,7 +241,6 @@ img {
   line-height: 1.5;
 }
 
-/* ===== CARDS ===== */
 .cards {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -297,11 +284,8 @@ img {
   margin-top: auto;
 }
 
-
-
-/* ===== CODE BLOCKS ===== */
 pre, .code-block {
-  background: #2D3748; /* Элегантный темный фон для кода */
+  background: #2D3748; 
   color: #E2E8F0;
   border-radius: 12px;
   padding: 1.5rem;
@@ -318,7 +302,6 @@ pre code, .code-block code {
   font-family: 'Consolas', 'Monaco', monospace;
 }
 
-/* ===== TABLES ===== */
 .api-table {
   width: 100%;
   border-collapse: separate;
@@ -357,7 +340,6 @@ pre code, .code-block code {
   background: rgba(212, 226, 212, 0.3);
 }
 
-/* ===== CONTACT-FORM ===== */
 .contact-form {
   max-width: 600px;
   background: var(--color-surface);
@@ -372,7 +354,6 @@ pre code, .code-block code {
   margin-bottom: 1.25rem;
 }
 
-/* Global Input Styles for Contact Form */
 .field input, 
 .field select, 
 .field textarea {
@@ -402,7 +383,6 @@ pre code, .code-block code {
   margin-bottom: 0.5rem;
 }
 
-/* Buttons */
 .button, button, input[type="submit"] {
   display: inline-block;
   background: var(--color-accent);
@@ -436,7 +416,6 @@ pre code, .code-block code {
   color: var(--color-text);
 }
 
-/* ===== SITE-FOOTER ===== */
 .site-footer {
   background: var(--color-surface);
   color: var(--color-text-light);
@@ -478,7 +457,6 @@ pre code, .code-block code {
   text-align: center;
 }
 
-/* ===== HERO ===== */
 .hero {
   text-align: center;
   padding: 4rem 0 3rem;
@@ -500,7 +478,6 @@ pre code, .code-block code {
   line-height: 1.6;
 }
 
-/* ===== RESPONSIVE — Tablet (< 992px) ===== */
 @media (max-width: 991px) {
   .page-layout {
     grid-template-columns: 1fr 240px;
@@ -517,7 +494,6 @@ pre code, .code-block code {
   }
 }
 
-/* ===== RESPONSIVE — Mobile (< 768px) ===== */
 @media (max-width: 767px) {
   .site-header__burger {
     display: flex;
@@ -533,9 +509,9 @@ pre code, .code-block code {
     border-bottom: 1px solid var(--color-border);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
     z-index: 99;
-    max-height: calc(100vh - 70px); /* Ограничиваем высоту меню размером экрана */
-    overflow-y: auto; /* Добавляем вертикальный скролл */
-    -webkit-overflow-scrolling: touch; /* Плавный скролл на iOS */
+    max-height: calc(100vh - 70px); 
+    overflow-y: auto; 
+    -webkit-overflow-scrolling: touch; 
   }
 
   .site-nav--open {
@@ -583,9 +559,6 @@ pre code, .code-block code {
   }
 }
 
-/* =========================================
-   OVERRIDES FOR UX FIXES
-   ========================================= */
 html {
   scroll-behavior: smooth;
 }
@@ -633,12 +606,10 @@ html {
   margin: 2rem auto;
 }
 
-/* Отступ для якорных ссылок (чтобы заголовки не прятались под sticky-шапку) */
 h1, h2, h3, h4, h5, h6 {
   scroll-margin-top: 6rem;
 }
 
-/* Подложка для главного контента */
 .page-layout__main {
   background: var(--color-surface);
   padding: 3rem 4rem;
@@ -654,24 +625,20 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-/* Прикрепляем сайдбар при скролле */
 .page-layout__sidebar {
   align-self: start;
   position: sticky;
   top: 6rem;
 }
 
-
-
-/* Альтернативное решение: уплотняем сайдбар, чтобы он влезал по высоте без скролла */
 .page-layout__sidebar {
   max-height: none;
   overflow-y: visible;
 }
 
 .sidebar__section {
-  padding: 1.25rem !important; /* Уменьшаем внутренние отступы (было 1.75rem) */
-  margin-bottom: 1rem !important; /* Уменьшаем расстояние между блоками (было 2rem) */
+  padding: 1.25rem !important; 
+  margin-bottom: 1rem !important; 
 }
 
 .sidebar__title {
@@ -681,17 +648,17 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .sidebar__section form {
-  gap: 0.5rem !important; /* Уменьшаем отступы в форме */
+  gap: 0.5rem !important; 
 }
 
 .sidebar__banner {
-  padding: 1.5rem 1rem !important; /* Уменьшаем баннер */
+  padding: 1.5rem 1rem !important; 
 }
 
 .sidebar__banner-text {
   font-size: 1rem !important;
 }
-/* ===== ENHANCED TYPOGRAPHY (Lists & Inline Code) ===== */
+
 .page-layout__main ul li,
 .page-layout__main ol li {
   margin-bottom: 0.75rem;
